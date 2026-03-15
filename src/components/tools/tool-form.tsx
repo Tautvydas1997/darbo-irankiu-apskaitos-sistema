@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import type { Locale } from "@/lib/i18n/config";
+import { pickLocaleText } from "@/lib/i18n/localize";
 
 type OptionItem = {
   id: string;
@@ -23,6 +25,7 @@ type ToolFormValues = {
 
 type ToolFormProps = {
   mode: "create" | "edit";
+  locale: Locale;
   toolId?: string;
   categories: OptionItem[];
   projects: OptionItem[];
@@ -48,7 +51,7 @@ const DEFAULT_VALUES: ToolFormValues = {
   conditionNotes: "",
 };
 
-export function ToolForm({ mode, toolId, categories, projects, initialValues }: ToolFormProps) {
+export function ToolForm({ mode, locale, toolId, categories, projects, initialValues }: ToolFormProps) {
   const router = useRouter();
   const [values, setValues] = useState<ToolFormValues>(initialValues ?? DEFAULT_VALUES);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -88,7 +91,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
       if (result?.fieldErrors) {
         setFieldErrors(result.fieldErrors);
       }
-      setSubmitError(result?.message ?? "Nepavyko issaugoti irankio.");
+      setSubmitError(result?.message ?? pickLocaleText(locale, "Nepavyko issaugoti irankio.", "Failed to save tool."));
       setIsSaving(false);
       return;
     }
@@ -100,11 +103,11 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
   return (
     <Card className="max-w-3xl">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Kurti iranki" : "Redaguoti iranki"}</CardTitle>
+        <CardTitle>{mode === "create" ? pickLocaleText(locale, "Kurti iranki", "Create tool") : pickLocaleText(locale, "Redaguoti iranki", "Edit tool")}</CardTitle>
         <CardDescription>
           {mode === "create"
-            ? "Uzregistruokite nauja iranki apskaitos sistemoje."
-            : "Atnaujinkite irankio duomenis, priskyrima ir statusa."}
+            ? pickLocaleText(locale, "Uzregistruokite nauja iranki apskaitos sistemoje.", "Register a new tool in inventory.")
+            : pickLocaleText(locale, "Atnaujinkite irankio duomenis, priskyrima ir statusa.", "Update tool data, assignment, and status.")}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -112,7 +115,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
           <div className="form-grid">
             <div className="form-field">
               <label htmlFor="name" className="field-label">
-                Pavadinimas
+                {pickLocaleText(locale, "Pavadinimas", "Name")}
               </label>
               <Input id="name" value={values.name} onChange={(event) => updateValue("name", event.target.value)} required />
               {fieldErrors.name?.[0] ? <p className="text-sm text-rose-600">{fieldErrors.name[0]}</p> : null}
@@ -120,7 +123,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
             <div className="form-field">
               <label htmlFor="inventoryNumber" className="field-label">
-                Inventoriaus numeris
+                {pickLocaleText(locale, "Inventoriaus numeris", "Inventory Number")}
               </label>
               <Input
                 id="inventoryNumber"
@@ -135,7 +138,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
             <div className="form-field">
               <label htmlFor="status" className="field-label">
-                Statusas
+                {pickLocaleText(locale, "Statusas", "Status")}
               </label>
               <select
                 id="status"
@@ -154,7 +157,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
             <div className="form-field">
               <label htmlFor="categoryId" className="field-label">
-                Kategorija
+                {pickLocaleText(locale, "Kategorija", "Category")}
               </label>
               <select
                 id="categoryId"
@@ -163,7 +166,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
                 onChange={(event) => updateValue("categoryId", event.target.value)}
                 required
               >
-                <option value="">Pasirinkite kategorija</option>
+                <option value="">{pickLocaleText(locale, "Pasirinkite kategorija", "Select category")}</option>
                 {categories.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.label}
@@ -175,7 +178,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
             <div className="form-field">
               <label htmlFor="projectId" className="field-label">
-                Projektas
+                {pickLocaleText(locale, "Projektas", "Project")}
               </label>
               <select
                 id="projectId"
@@ -183,7 +186,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
                 value={values.projectId}
                 onChange={(event) => updateValue("projectId", event.target.value)}
               >
-                <option value="">Nepriskirta</option>
+                <option value="">{pickLocaleText(locale, "Nepriskirta", "Unassigned")}</option>
                 {projects.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.label}
@@ -195,14 +198,14 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
           <div className="form-field">
             <label htmlFor="conditionNotes" className="field-label">
-              Bukles pastabos
+              {pickLocaleText(locale, "Bukles pastabos", "Condition Notes")}
             </label>
             <textarea
               id="conditionNotes"
               className="app-textarea"
               value={values.conditionNotes}
               onChange={(event) => updateValue("conditionNotes", event.target.value)}
-              placeholder="Papildomos pastabos apie esama irankio bukle"
+              placeholder={pickLocaleText(locale, "Papildomos pastabos apie esama irankio bukle", "Optional notes about current tool condition")}
             />
             {fieldErrors.conditionNotes?.[0] ? (
               <p className="text-sm text-rose-600">{fieldErrors.conditionNotes[0]}</p>
@@ -213,10 +216,14 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Button type="submit" disabled={isSaving}>
-              {isSaving ? "Saugoma..." : mode === "create" ? "Kurti iranki" : "Issaugoti pakeitimus"}
+              {isSaving
+                ? pickLocaleText(locale, "Saugoma...", "Saving...")
+                : mode === "create"
+                  ? pickLocaleText(locale, "Kurti iranki", "Create tool")
+                  : pickLocaleText(locale, "Issaugoti pakeitimus", "Save changes")}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/tools")}>
-              Atsaukti
+              {pickLocaleText(locale, "Atsaukti", "Cancel")}
             </Button>
           </div>
         </form>

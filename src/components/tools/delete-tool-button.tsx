@@ -2,16 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import type { Locale } from "@/lib/i18n/config";
+import { pickLocaleText } from "@/lib/i18n/localize";
 
 type DeleteToolButtonProps = {
   toolId: string;
+  locale: Locale;
 };
 
-export function DeleteToolButton({ toolId }: DeleteToolButtonProps) {
+export function DeleteToolButton({ toolId, locale }: DeleteToolButtonProps) {
   const router = useRouter();
 
   const handleDelete = async () => {
-    const confirmed = window.confirm("Ar tikrai norite istrinti si iranki?");
+    const confirmed = window.confirm(pickLocaleText(locale, "Ar tikrai norite istrinti si iranki?", "Delete this tool?"));
     if (!confirmed) {
       return;
     }
@@ -21,7 +24,7 @@ export function DeleteToolButton({ toolId }: DeleteToolButtonProps) {
     });
 
     if (!response.ok) {
-      window.alert("Nepavyko istrinti irankio.");
+      window.alert(pickLocaleText(locale, "Nepavyko istrinti irankio.", "Failed to delete tool."));
       return;
     }
 
@@ -30,7 +33,7 @@ export function DeleteToolButton({ toolId }: DeleteToolButtonProps) {
 
   return (
     <Button type="button" size="sm" variant="outline" onClick={handleDelete}>
-      Istrinti
+      {pickLocaleText(locale, "Istrinti", "Delete")}
     </Button>
   );
 }

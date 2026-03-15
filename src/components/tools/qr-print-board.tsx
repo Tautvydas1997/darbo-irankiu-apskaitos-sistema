@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Locale } from "@/lib/i18n/config";
+import { pickLocaleText } from "@/lib/i18n/localize";
 
 type PrintableTool = {
   id: string;
@@ -13,9 +15,10 @@ type PrintableTool = {
 
 type QrPrintBoardProps = {
   tools: PrintableTool[];
+  locale: Locale;
 };
 
-export function QrPrintBoard({ tools }: QrPrintBoardProps) {
+export function QrPrintBoard({ tools, locale }: QrPrintBoardProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>(tools.map((tool) => tool.id));
 
   const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds]);
@@ -34,16 +37,16 @@ export function QrPrintBoard({ tools }: QrPrintBoardProps) {
     <section className="page-shell">
       <Card className="no-print">
         <CardHeader>
-          <CardTitle>QR lipduku spauda</CardTitle>
-          <CardDescription>Pasirinkite irankius, kuriuos norite itraukti i spausdinimo lapa.</CardDescription>
+          <CardTitle>{pickLocaleText(locale, "QR lipduku spauda", "QR sticker print")}</CardTitle>
+          <CardDescription>{pickLocaleText(locale, "Pasirinkite irankius, kuriuos norite itraukti i spausdinimo lapa.", "Select tools to include in printable sticker sheet.")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Button type="button" variant="outline" size="sm" onClick={toggleAll}>
-              {allSelected ? "Nuzymeti visus" : "Pazymeti visus"}
+              {allSelected ? pickLocaleText(locale, "Nuzymeti visus", "Unselect all") : pickLocaleText(locale, "Pazymeti visus", "Select all")}
             </Button>
             <Button type="button" size="sm" onClick={() => window.print()} disabled={selectedIds.length === 0}>
-              Spausdinti pazymetus ({selectedIds.length})
+              {pickLocaleText(locale, "Spausdinti pazymetus", "Print selected")} ({selectedIds.length})
             </Button>
           </div>
 
@@ -51,9 +54,9 @@ export function QrPrintBoard({ tools }: QrPrintBoardProps) {
             <table className="app-table">
               <thead className="sticky top-0 bg-slate-50">
                 <tr>
-                  <th>Pasirinkti</th>
-                  <th>Irankio pavadinimas</th>
-                  <th>Inventoriaus numeris</th>
+                  <th>{pickLocaleText(locale, "Pasirinkti", "Select")}</th>
+                  <th>{pickLocaleText(locale, "Irankio pavadinimas", "Tool Name")}</th>
+                  <th>{pickLocaleText(locale, "Inventoriaus numeris", "Inventory Number")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -64,7 +67,7 @@ export function QrPrintBoard({ tools }: QrPrintBoardProps) {
                         type="checkbox"
                         checked={selectedSet.has(tool.id)}
                         onChange={() => toggleTool(tool.id)}
-                        aria-label={`Pasirinkti ${tool.name}`}
+                        aria-label={pickLocaleText(locale, `Pasirinkti ${tool.name}`, `Select ${tool.name}`)}
                       />
                     </td>
                     <td className="text-slate-800">{tool.name}</td>

@@ -1,5 +1,7 @@
 import { AlertTriangle, ArrowLeftRight, Wrench } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Locale } from "@/lib/i18n/config";
+import { pickLocaleText } from "@/lib/i18n/localize";
 import { cn } from "@/lib/utils";
 import type { ComponentType } from "react";
 
@@ -13,6 +15,7 @@ type Activity = {
 
 type ActivityTimelineProps = {
   items: Activity[];
+  locale: Locale;
 };
 
 const itemStyles: Record<Activity["type"], { icon: ComponentType<{ className?: string }>; color: string }> = {
@@ -21,12 +24,12 @@ const itemStyles: Record<Activity["type"], { icon: ComponentType<{ className?: s
   broken: { icon: AlertTriangle, color: "bg-rose-100 text-rose-700" },
 };
 
-export function ActivityTimeline({ items }: ActivityTimelineProps) {
+export function ActivityTimeline({ items, locale }: ActivityTimelineProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-slate-900">Naujausiu veiksmu juosta</CardTitle>
-        <CardDescription>Naujausi irankiu judejimo ir statuso pokyciu ivykiai.</CardDescription>
+        <CardTitle className="text-base font-semibold text-slate-900">{pickLocaleText(locale, "Naujausiu veiksmu juosta", "Recent activity timeline")}</CardTitle>
+        <CardDescription>{pickLocaleText(locale, "Naujausi irankiu judejimo ir statuso pokyciu ivykiai.", "Latest tool movement and status events.")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {items.map((item, index) => {

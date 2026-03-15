@@ -1,13 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import type { Locale } from "@/lib/i18n/config";
+import { pickLocaleText } from "@/lib/i18n/localize";
 
 type QrActionsProps = {
   dataUrl: string;
   fileName: string;
+  locale: Locale;
 };
 
-export function QrActions({ dataUrl, fileName }: QrActionsProps) {
+export function QrActions({ dataUrl, fileName, locale }: QrActionsProps) {
   const downloadQr = () => {
     const link = document.createElement("a");
     link.href = dataUrl;
@@ -24,7 +27,7 @@ export function QrActions({ dataUrl, fileName }: QrActionsProps) {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Spausdinti QR</title>
+          <title>${pickLocaleText(locale, "Spausdinti QR", "Print QR")}</title>
           <style>
             body { font-family: Arial, sans-serif; display: grid; place-items: center; margin: 0; height: 100vh; }
             .wrap { text-align: center; }
@@ -46,10 +49,10 @@ export function QrActions({ dataUrl, fileName }: QrActionsProps) {
   return (
     <div className="flex items-center gap-2">
       <Button type="button" size="sm" variant="outline" onClick={downloadQr}>
-        Atsisiusti QR
+        {pickLocaleText(locale, "Atsisiusti QR", "Download QR")}
       </Button>
       <Button type="button" size="sm" variant="outline" onClick={printQr}>
-        Spausdinti QR
+        {pickLocaleText(locale, "Spausdinti QR", "Print QR")}
       </Button>
     </div>
   );

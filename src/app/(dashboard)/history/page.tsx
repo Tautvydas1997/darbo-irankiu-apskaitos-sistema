@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getAuthSession } from "@/lib/auth";
 import { formatEnumLabel } from "@/lib/formatters";
 import { getDictionary, getLocaleFromCookie } from "@/lib/i18n";
+import { pickLocaleText } from "@/lib/i18n/localize";
 import { hasAdminAccess } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
@@ -110,13 +111,17 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
     <section className="page-shell">
       <div>
         <h2 className="page-title">{dictionary.common.history}</h2>
-        <p className="page-subtitle">Perziurekite visus irankiu veiksmus su issamiais filtrais.</p>
+        <p className="page-subtitle">
+          {pickLocaleText(locale, "Perziurekite visus irankiu veiksmus su issamiais filtrais.", "Review all tool transactions with advanced filters.")}
+        </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Filtrai</CardTitle>
-          <CardDescription>Filtruokite istorija pagal iranki, darbuotoja, projekta, veiksma ir data.</CardDescription>
+          <CardTitle>{pickLocaleText(locale, "Filtrai", "Filters")}</CardTitle>
+          <CardDescription>
+            {pickLocaleText(locale, "Filtruokite istorija pagal iranki, darbuotoja, projekta, veiksma ir data.", "Filter history by tool, employee, project code, action type, and date range.")}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form method="get" className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-5">
@@ -125,7 +130,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
               defaultValue={filters.toolId}
               className="app-select"
             >
-              <option value="">Visi irankiai</option>
+              <option value="">{pickLocaleText(locale, "Visi irankiai", "All tools")}</option>
               {tools.map((tool) => (
                 <option key={tool.id} value={tool.id}>
                   {tool.name} ({tool.inventoryNumber})
@@ -138,7 +143,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
               name="employee"
               defaultValue={filters.employee}
               className="app-select"
-              placeholder="Darbuotojo vardas arba pavarde"
+              placeholder={pickLocaleText(locale, "Darbuotojo vardas arba pavarde", "Employee first or last name")}
             />
 
             <input
@@ -146,11 +151,11 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
               name="projectCode"
               defaultValue={filters.projectCode}
               className="app-select"
-              placeholder="Projekto kodas (pvz. P2652)"
+              placeholder={pickLocaleText(locale, "Projekto kodas (pvz. P2652)", "Project code (e.g. P2652)")}
             />
 
             <select name="actionType" defaultValue={filters.actionType} className="app-select">
-              <option value="">Visi veiksmu tipai</option>
+              <option value="">{pickLocaleText(locale, "Visi veiksmu tipai", "All action types")}</option>
               {Object.values(ActionType).map((actionType) => (
                 <option key={actionType} value={actionType}>
                   {formatEnumLabel(actionType)}
@@ -180,13 +185,13 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
                 defaultChecked={filters.unknownOnly}
                 className="h-4 w-4 rounded border-slate-300"
               />
-              Rodyti tik neegzistuojanciu projektu kodus
+              {pickLocaleText(locale, "Rodyti tik neegzistuojanciu projektu kodus", "Only unknown project codes")}
             </label>
 
             <div className="flex items-center gap-2 md:col-span-2 xl:col-span-5">
-              <Button type="submit">Taikyti filtrus</Button>
+              <Button type="submit">{pickLocaleText(locale, "Taikyti filtrus", "Apply filters")}</Button>
               <Button asChild type="button" variant="outline">
-                <Link href="/history">Atstatyti</Link>
+                <Link href="/history">{pickLocaleText(locale, "Atstatyti", "Reset")}</Link>
               </Button>
             </div>
           </form>
@@ -195,23 +200,23 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Irankiu istorija</CardTitle>
-          <CardDescription>Visi su irankiais atlikti veiksmai.</CardDescription>
+          <CardTitle>{pickLocaleText(locale, "Irankiu istorija", "Transactions")}</CardTitle>
+          <CardDescription>{pickLocaleText(locale, "Visi su irankiais atlikti veiksmai.", "All actions performed on tools.")}</CardDescription>
         </CardHeader>
         <CardContent>
           {transactions.length === 0 ? (
-            <p className="text-sm text-slate-600">Pagal pasirinktus filtrus irasu nerasta.</p>
+            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Pagal pasirinktus filtrus irasu nerasta.", "No transactions found for selected filters.")}</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
                 <thead>
                   <tr>
-                    <th>Irankis</th>
-                    <th>Veiksmas</th>
-                    <th>Darbuotojas</th>
-                    <th>Projektas</th>
-                    <th>Data</th>
-                    <th>Pastabos</th>
+                    <th>{pickLocaleText(locale, "Irankis", "Tool")}</th>
+                    <th>{pickLocaleText(locale, "Veiksmas", "Action")}</th>
+                    <th>{pickLocaleText(locale, "Darbuotojas", "Employee")}</th>
+                    <th>{pickLocaleText(locale, "Projektas", "Project")}</th>
+                    <th>{pickLocaleText(locale, "Data", "Date")}</th>
+                    <th>{pickLocaleText(locale, "Pastabos", "Notes")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -228,10 +233,10 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
                         ) : (
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
-                              {item.projectCode} (projekto nera sarase)
+                              {pickLocaleText(locale, `${item.projectCode} (projekto nera sarase)`, `${item.projectCode} (not in projects)`)}
                             </span>
                             <Button asChild size="sm" variant="outline">
-                              <Link href={`/projects/new?code=${encodeURIComponent(item.projectCode)}`}>Prideti projekta</Link>
+                              <Link href={`/projects/new?code=${encodeURIComponent(item.projectCode)}`}>{pickLocaleText(locale, "Prideti projekta", "Add project")}</Link>
                             </Button>
                           </div>
                         )}

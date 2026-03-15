@@ -8,20 +8,23 @@ import { AlertTriangle, CheckCircle2, ClipboardCheck, ScanLine } from "lucide-re
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import type { Locale } from "@/lib/i18n/config";
+import { pickLocaleText } from "@/lib/i18n/localize";
 
 type ScanQuickActionsProps = {
   toolId: string;
+  locale: Locale;
 };
 
 type QuickAction = "CHECK_OUT" | "RETURN" | "REPORT_BROKEN";
 
-const ACTIONS: Array<{ key: QuickAction; label: string; icon: ComponentType<{ className?: string }> }> = [
-  { key: "CHECK_OUT", label: "Paimti iranki", icon: ClipboardCheck },
-  { key: "RETURN", label: "Grazinti iranki", icon: CheckCircle2 },
-  { key: "REPORT_BROKEN", label: "Pranesti apie gedima", icon: AlertTriangle },
+const ACTIONS: Array<{ key: QuickAction; icon: ComponentType<{ className?: string }> }> = [
+  { key: "CHECK_OUT", icon: ClipboardCheck },
+  { key: "RETURN", icon: CheckCircle2 },
+  { key: "REPORT_BROKEN", icon: AlertTriangle },
 ];
 
-export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
+export function ScanQuickActions({ toolId, locale }: ScanQuickActionsProps) {
   const router = useRouter();
   const [pendingAction, setPendingAction] = useState<QuickAction | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -32,7 +35,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
   const runAction = async (action: QuickAction) => {
     if (!firstName.trim() || !lastName.trim() || !projectCode.trim()) {
-      window.alert("Iveskite varda, pavarde ir projekto koda.");
+      window.alert(pickLocaleText(locale, "Iveskite varda, pavarde ir projekto koda.", "Please enter first name, last name, and project code."));
       return;
     }
 
@@ -54,22 +57,32 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
     if (!response.ok) {
       const error = (await response.json().catch(() => null)) as { message?: string } | null;
-      window.alert(error?.message ?? "Greitas veiksmas nepavyko.");
+      window.alert(error?.message ?? pickLocaleText(locale, "Greitas veiksmas nepavyko.", "Quick action failed."));
       return;
     }
 
-    setSuccessMessage(`Veiksmas "${itemLabel(action)}" sekmingai atliktas.`);
+    setSuccessMessage(
+      pickLocaleText(
+        locale,
+        `Veiksmas "${itemLabel(action)}" sekmingai atliktas.`,
+        `Action "${itemLabel(action)}" completed successfully.`
+      )
+    );
     router.refresh();
   };
 
   const itemLabel = (action: QuickAction) =>
-    ACTIONS.find((item) => item.key === action)?.label ?? action;
+    action === "CHECK_OUT"
+      ? pickLocaleText(locale, "Paimti iranki", "Take tool")
+      : action === "RETURN"
+        ? pickLocaleText(locale, "Grazinti iranki", "Return tool")
+        : pickLocaleText(locale, "Pranesti apie gedima", "Report broken");
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Darbuotojo veiksmai</CardTitle>
-        <CardDescription>Iveskite duomenis ir pasirinkite veiksma.</CardDescription>
+        <CardTitle>{pickLocaleText(locale, "Darbuotojo veiksmai", "Employee actions")}</CardTitle>
+        <CardDescription>{pickLocaleText(locale, "Iveskite duomenis ir pasirinkite veiksma.", "Enter your details and select an action.")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         {successMessage ? (
@@ -85,7 +98,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
               <Button asChild type="button" variant="outline">
                 <Link href="/scan">
                   <ScanLine className="mr-2 h-4 w-4" />
-                  Skenuoti kita QR
+                  {pickLocaleText(locale, "Skenuoti kita QR", "Scan another QR")}
                 </Link>
               </Button>
             </div>
@@ -95,7 +108,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <div className="form-field">
             <label htmlFor="firstName" className="field-label">
-              Vardas
+              {pickLocaleText(locale, "Vardas", "First Name")}
             </label>
             <Input
               id="firstName"
@@ -107,7 +120,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
           <div className="form-field">
             <label htmlFor="lastName" className="field-label">
-              Pavarde
+              {pickLocaleText(locale, "Pavarde", "Last Name")}
             </label>
             <Input
               id="lastName"
@@ -119,7 +132,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
           <div className="form-field sm:col-span-2">
             <label htmlFor="projectCode" className="field-label">
-              Projekto kodas
+              {pickLocaleText(locale, "Projekto kodas", "Project Code")}
             </label>
             <Input
               id="projectCode"
@@ -131,13 +144,13 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
           <div className="form-field sm:col-span-2">
             <label htmlFor="notes" className="field-label">
-              Pastabos (nebutina)
+              {pickLocaleText(locale, "Pastabos (nebutina)", "Notes (optional)")}
             </label>
             <Input
               id="notes"
               value={notes}
               onChange={(event) => setNotes(event.target.value)}
-              placeholder="Papildoma pastaba"
+              placeholder={pickLocaleText(locale, "Papildoma pastaba", "Additional note")}
             />
           </div>
         </div>
@@ -156,7 +169,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
                 disabled={Boolean(pendingAction) || Boolean(successMessage)}
               >
                 <Icon className="mr-2 h-4 w-4" />
-                {loading ? "Saugoma..." : item.label}
+                {loading ? pickLocaleText(locale, "Saugoma...", "Saving...") : itemLabel(item.key)}
               </Button>
             );
           })}
@@ -166,7 +179,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
           <Button asChild className="h-12 text-base">
             <Link href="/scan">
               <ScanLine className="mr-2 h-4 w-4" />
-              Skenuoti kita iranki
+              {pickLocaleText(locale, "Skenuoti kita iranki", "Scan next tool")}
             </Link>
           </Button>
         </div>

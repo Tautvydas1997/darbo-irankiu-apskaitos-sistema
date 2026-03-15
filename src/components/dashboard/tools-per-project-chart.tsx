@@ -1,4 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Locale } from "@/lib/i18n/config";
+import { pickLocaleText } from "@/lib/i18n/localize";
 
 type ProjectPoint = {
   project: string;
@@ -7,16 +9,17 @@ type ProjectPoint = {
 
 type ToolsPerProjectChartProps = {
   data: ProjectPoint[];
+  locale: Locale;
 };
 
-export function ToolsPerProjectChart({ data }: ToolsPerProjectChartProps) {
+export function ToolsPerProjectChart({ data, locale }: ToolsPerProjectChartProps) {
   const maxValue = Math.max(...data.map((item) => item.count), 1);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-slate-900">Irankiai pagal projekta</CardTitle>
-        <CardDescription>Dabartinis irankiu pasiskirstymas aktyviuose projektuose.</CardDescription>
+        <CardTitle className="text-base font-semibold text-slate-900">{pickLocaleText(locale, "Irankiai pagal projekta", "Tools per project")}</CardTitle>
+        <CardDescription>{pickLocaleText(locale, "Dabartinis irankiu pasiskirstymas aktyviuose projektuose.", "Current inventory distribution across active projects.")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {data.map((item) => {

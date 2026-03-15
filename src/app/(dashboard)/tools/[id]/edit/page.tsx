@@ -1,5 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { getAuthSession } from "@/lib/auth";
+import { getLocaleFromCookie } from "@/lib/i18n";
+import { pickLocaleText } from "@/lib/i18n/localize";
 import { hasAdminAccess } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { ToolForm } from "@/components/tools/tool-form";
@@ -10,6 +12,7 @@ type EditToolPageProps = {
 
 export default async function EditToolPage({ params }: EditToolPageProps) {
   const session = await getAuthSession();
+  const locale = getLocaleFromCookie();
   const canManage = hasAdminAccess(session?.user.role);
   if (!canManage) {
     redirect("/tools");
@@ -30,12 +33,13 @@ export default async function EditToolPage({ params }: EditToolPageProps) {
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">Redaguoti iranki</h2>
-        <p className="page-subtitle">Atnaujinkite priskyrimus, statusa ir bukles pastabas.</p>
+        <h2 className="page-title">{pickLocaleText(locale, "Redaguoti iranki", "Edit tool")}</h2>
+        <p className="page-subtitle">{pickLocaleText(locale, "Atnaujinkite priskyrimus, statusa ir bukles pastabas.", "Update assignments, status, and condition notes.")}</p>
       </div>
 
       <ToolForm
         mode="edit"
+        locale={locale}
         toolId={tool.id}
         categories={categories.map((item) => ({ id: item.id, label: item.name }))}
         projects={projects.map((item) => ({ id: item.id, label: `${item.code} - ${item.name}` }))}

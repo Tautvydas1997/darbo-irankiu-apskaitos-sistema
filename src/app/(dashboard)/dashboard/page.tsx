@@ -1,4 +1,5 @@
 import { getLocaleFromCookie, getDictionary } from "@/lib/i18n";
+import { pickLocaleText } from "@/lib/i18n/localize";
 import { formatEnumLabel } from "@/lib/formatters";
 import { prisma } from "@/lib/prisma";
 import { StatCard } from "@/components/dashboard/stat-card";
@@ -34,11 +35,11 @@ export default async function DashboardPage() {
   ]);
 
   const stats = [
-    { title: "Visi irankiai", value: totalTools, trend: "Bendras kiekis", tone: "slate" as const },
-    { title: "Irankiai sandelyje", value: inStorage, trend: "Paruosta isdavimui", tone: "emerald" as const },
-    { title: "Paimti irankiai", value: checkedOut, trend: "Siuo metu naudojami", tone: "amber" as const },
-    { title: "Sugede irankiai", value: broken, trend: "Reikia patikros", tone: "rose" as const },
-    { title: "Prarasti irankiai", value: lost, trend: "Kritinis stebejimas", tone: "rose" as const },
+    { title: pickLocaleText(locale, "Visi irankiai", "Total tools"), value: totalTools, trend: pickLocaleText(locale, "Bendras kiekis", "Inventory scope"), tone: "slate" as const },
+    { title: pickLocaleText(locale, "Irankiai sandelyje", "Tools in storage"), value: inStorage, trend: pickLocaleText(locale, "Paruosta isdavimui", "Ready for issue"), tone: "emerald" as const },
+    { title: pickLocaleText(locale, "Paimti irankiai", "Checked out tools"), value: checkedOut, trend: pickLocaleText(locale, "Siuo metu naudojami", "Currently in use"), tone: "amber" as const },
+    { title: pickLocaleText(locale, "Sugede irankiai", "Broken tools"), value: broken, trend: pickLocaleText(locale, "Reikia patikros", "Need inspection"), tone: "rose" as const },
+    { title: pickLocaleText(locale, "Prarasti irankiai", "Lost tools"), value: lost, trend: pickLocaleText(locale, "Kritinis stebejimas", "Critical control"), tone: "rose" as const },
   ];
 
   const toolsPerProject = projects.map((project) => ({
@@ -71,7 +72,7 @@ export default async function DashboardPage() {
       <div className="page-header">
         <h2 className="page-title">{dictionary.common.dashboard}</h2>
         <p className="page-subtitle">
-          Realus irankiu bukles, paskirstymo projektams ir veiksmu suvestines vaizdas.
+          {pickLocaleText(locale, "Realus irankiu bukles, paskirstymo projektams ir veiksmu suvestines vaizdas.", "Real-time overview of inventory status, project allocation, and operational activity.")}
         </p>
       </div>
 
@@ -83,41 +84,41 @@ export default async function DashboardPage() {
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="xl:col-span-2">
-          <ToolsPerProjectChart data={toolsPerProject} />
+          <ToolsPerProjectChart data={toolsPerProject} locale={locale} />
         </div>
         <Card className="bg-gradient-to-br from-slate-900 to-slate-700 text-white">
           <CardHeader>
-            <CardTitle className="text-base font-semibold">Operacine suvestine</CardTitle>
+            <CardTitle className="text-base font-semibold">{pickLocaleText(locale, "Operacine suvestine", "Operational summary")}</CardTitle>
             <CardDescription className="text-slate-200">
-              Esamos sistemos bukles santrauka administravimui.
+              {pickLocaleText(locale, "Esamos sistemos bukles santrauka administravimui.", "Current system health snapshot for management review.")}
             </CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-300">Panaudojimas</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">{pickLocaleText(locale, "Panaudojimas", "Utilization")}</p>
               <p className="mt-1 text-2xl font-semibold">
                 {totalTools > 0 ? `${Math.round((checkedOut / totalTools) * 100)}%` : "0%"}
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-300">Prieinamumas</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">{pickLocaleText(locale, "Prieinamumas", "Availability")}</p>
               <p className="mt-1 text-2xl font-semibold">
                 {totalTools > 0 ? `${Math.round((inStorage / totalTools) * 100)}%` : "0%"}
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-300">Prieziura</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">{pickLocaleText(locale, "Prieziura", "Maintenance")}</p>
               <p className="mt-1 text-2xl font-semibold">{broken}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-300">Kritiniai signalai</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">{pickLocaleText(locale, "Kritiniai signalai", "Critical alerts")}</p>
               <p className="mt-1 text-2xl font-semibold">{lost}</p>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <ActivityTimeline items={recentActivity} />
+      <ActivityTimeline items={recentActivity} locale={locale} />
     </section>
   );
 }

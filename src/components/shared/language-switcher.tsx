@@ -14,11 +14,19 @@ export function LanguageSwitcher({ locale }: LanguageSwitcherProps) {
   const [isPending, startTransition] = useTransition();
 
   const setLocale = async (nextLocale: Locale) => {
-    await fetch("/api/settings/preferences", {
+    const response = await fetch("/api/settings/preferences", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ language: nextLocale }),
     });
+
+    // Update browser cookie immediately for predictable re-render.
+    document.cookie = `locale=${nextLocale}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+
+    // Keep UI responsive even if preference API returns non-OK.
+    if (!response.ok) {
+      console.warn("Language preference API failed, using cookie fallback.");
+    }
 
     startTransition(() => {
       router.refresh();

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAuthSession } from "@/lib/auth";
 import { formatEnumLabel } from "@/lib/formatters";
 import { getDictionary, getLocaleFromCookie } from "@/lib/i18n";
+import { pickLocaleText } from "@/lib/i18n/localize";
 import { hasAdminAccess } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { DeleteToolButton } from "@/components/tools/delete-tool-button";
@@ -27,15 +28,17 @@ export default async function ToolsPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="page-title">{dictionary.common.tools}</h2>
-          <p className="page-subtitle">Stebekite ir valdykite irankius su projekto ir kategorijos priskyrimu.</p>
+          <p className="page-subtitle">
+            {pickLocaleText(locale, "Stebekite ir valdykite irankius su projekto ir kategorijos priskyrimu.", "Track and manage all inventory tools with project/category assignment.")}
+          </p>
         </div>
         {canManage ? (
           <div className="flex items-center gap-2">
             <Button asChild variant="outline">
-              <Link href="/tools/qr-print">QR spauda</Link>
+              <Link href="/tools/qr-print">{pickLocaleText(locale, "QR spauda", "QR Print")}</Link>
             </Button>
             <Button asChild>
-              <Link href="/tools/new">Kurti iranki</Link>
+              <Link href="/tools/new">{pickLocaleText(locale, "Kurti iranki", "Create tool")}</Link>
             </Button>
           </div>
         ) : null}
@@ -43,23 +46,23 @@ export default async function ToolsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Irankiai</CardTitle>
-          <CardDescription>Registruoti irankiai ir ju esamas statusas.</CardDescription>
+          <CardTitle>{pickLocaleText(locale, "Irankiai", "Tools")}</CardTitle>
+          <CardDescription>{pickLocaleText(locale, "Registruoti irankiai ir ju esamas statusas.", "Registered tools and current assignment/status overview.")}</CardDescription>
         </CardHeader>
         <CardContent>
           {tools.length === 0 ? (
-            <p className="text-sm text-slate-600">Irankiu dar nera.</p>
+            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Irankiu dar nera.", "No tools yet.")}</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
                 <thead>
                   <tr>
-                    <th>Irankio pavadinimas</th>
-                    <th>Inventoriaus numeris</th>
-                    <th>Kategorija</th>
-                    <th>Projektas</th>
-                    <th>Statusas</th>
-                    <th>Veiksmai</th>
+                    <th>{pickLocaleText(locale, "Irankio pavadinimas", "Tool Name")}</th>
+                    <th>{pickLocaleText(locale, "Inventoriaus numeris", "Inventory Number")}</th>
+                    <th>{pickLocaleText(locale, "Kategorija", "Category")}</th>
+                    <th>{pickLocaleText(locale, "Projektas", "Project")}</th>
+                    <th>{pickLocaleText(locale, "Statusas", "Status")}</th>
+                    <th>{pickLocaleText(locale, "Veiksmai", "Actions")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -72,7 +75,7 @@ export default async function ToolsPage() {
                       </td>
                       <td>{tool.inventoryNumber}</td>
                       <td>{tool.category.name}</td>
-                      <td>{tool.project ? `${tool.project.code} - ${tool.project.name}` : "Nepriskirta"}</td>
+                      <td>{tool.project ? `${tool.project.code} - ${tool.project.name}` : pickLocaleText(locale, "Nepriskirta", "Unassigned")}</td>
                       <td>
                         <span className="status-pill">
                           {formatEnumLabel(tool.status)}
@@ -82,12 +85,12 @@ export default async function ToolsPage() {
                         {canManage ? (
                           <div className="flex items-center gap-2">
                             <Button asChild size="sm" variant="outline">
-                              <Link href={`/tools/${tool.id}/edit`}>Redaguoti</Link>
+                              <Link href={`/tools/${tool.id}/edit`}>{pickLocaleText(locale, "Redaguoti", "Edit")}</Link>
                             </Button>
-                            <DeleteToolButton toolId={tool.id} />
+                            <DeleteToolButton toolId={tool.id} locale={locale} />
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400">Tik perziura</span>
+                          <span className="text-xs text-slate-400">{pickLocaleText(locale, "Tik perziura", "View only")}</span>
                         )}
                       </td>
                     </tr>

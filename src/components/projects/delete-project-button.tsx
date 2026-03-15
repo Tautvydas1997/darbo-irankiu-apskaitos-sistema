@@ -2,16 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import type { Locale } from "@/lib/i18n/config";
+import { pickLocaleText } from "@/lib/i18n/localize";
 
 type DeleteProjectButtonProps = {
   projectId: string;
+  locale: Locale;
 };
 
-export function DeleteProjectButton({ projectId }: DeleteProjectButtonProps) {
+export function DeleteProjectButton({ projectId, locale }: DeleteProjectButtonProps) {
   const router = useRouter();
 
   const handleDelete = async () => {
-    const confirmed = window.confirm("Ar tikrai norite istrinti si projekta?");
+    const confirmed = window.confirm(pickLocaleText(locale, "Ar tikrai norite istrinti si projekta?", "Delete this project?"));
     if (!confirmed) {
       return;
     }
@@ -21,7 +24,7 @@ export function DeleteProjectButton({ projectId }: DeleteProjectButtonProps) {
     });
 
     if (!response.ok) {
-      window.alert("Nepavyko istrinti projekto.");
+      window.alert(pickLocaleText(locale, "Nepavyko istrinti projekto.", "Failed to delete project."));
       return;
     }
 
@@ -30,7 +33,7 @@ export function DeleteProjectButton({ projectId }: DeleteProjectButtonProps) {
 
   return (
     <Button type="button" size="sm" variant="outline" onClick={handleDelete}>
-      Istrinti
+      {pickLocaleText(locale, "Istrinti", "Delete")}
     </Button>
   );
 }
