@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ToolStatus {
+  IN_STORAGE
+  CHECKED_OUT
+  BROKEN
+  LOST
+  IN_REPAIR
+}
+
+enum ActionType {
+  CHECK_OUT
+  RETURN
+  REPORT_BROKEN
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  language  String   @default("lt")
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model Project {
+  id               String            @id @default(cuid())
+  code             String            @unique
+  name             String
+  location         String
+  createdAt        DateTime          @default(now())
+  tools            Tool[]
+  toolTransactions ToolTransaction[]
+
+  @@index([code])
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  tools Tool[]
+}
+
+model Tool {
+  id               String            @id @default(cuid())
+  name             String
+  inventoryNumber  String            @unique
+  qrCode           String            @unique
+  status           ToolStatus        @default(IN_STORAGE)
+  categoryId       String
+  projectId        String?
+  conditionNotes   String?
+  createdAt        DateTime          @default(now())
+  category         Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  project          Project?          @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  toolTransactions ToolTransaction[]
+
+  @@index([inventoryNumber])
+  @@index([qrCode])
+  @@index([status])
+  @@index([categoryId])
+  @@index([projectId])
+}
+
+model ToolTransaction {
+  id                String     @id @default(cuid())
+  toolId            String
+  projectId         String?
+  projectCode       String
+  employeeFirstName String
+  employeeLastName  String
+  actionType        ActionType
+  notes             String?
+  createdAt         DateTime   @default(now())
+  tool              Tool       @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  project           Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([toolId])
+  @@index([projectId])
+  @@index([projectCode])
+  @@index([employeeFirstName])
+  @@index([employeeLastName])
+  @@index([actionType])
+  @@index([createdAt])
+}
