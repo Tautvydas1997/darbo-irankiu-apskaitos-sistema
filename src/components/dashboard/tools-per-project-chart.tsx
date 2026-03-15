@@ -15,8 +15,8 @@ export function ToolsPerProjectChart({ data }: ToolsPerProjectChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-slate-900">Tools per Project</CardTitle>
-        <CardDescription>Current inventory distribution across active projects.</CardDescription>
+        <CardTitle className="text-base font-semibold text-slate-900">Irankiai pagal projekta</CardTitle>
+        <CardDescription>Dabartinis irankiu pasiskirstymas aktyviuose projektuose.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {data.map((item) => {

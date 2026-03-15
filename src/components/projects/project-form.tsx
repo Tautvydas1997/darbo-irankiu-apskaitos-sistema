@@ -62,7 +62,7 @@ export function ProjectForm({ mode, projectId, initialValues }: ProjectFormProps
       if (result?.fieldErrors) {
         setFieldErrors(result.fieldErrors);
       }
-      setSubmitError(result?.message ?? "Failed to save project.");
+      setSubmitError(result?.message ?? "Nepavyko issaugoti projekto.");
       setIsSaving(false);
       return;
     }
@@ -74,18 +74,18 @@ export function ProjectForm({ mode, projectId, initialValues }: ProjectFormProps
   return (
     <Card className="max-w-2xl">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Create project" : "Edit project"}</CardTitle>
+        <CardTitle>{mode === "create" ? "Kurti projekta" : "Redaguoti projekta"}</CardTitle>
         <CardDescription>
           {mode === "create"
-            ? "Create a new project and assign tools to it."
-            : "Update project details used by inventory operations."}
+            ? "Sukurkite nauja projekta ir priskirkite jam irankius."
+            : "Atnaujinkite projekto duomenis, naudojamus irankiu apskaitoje."}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="form-field">
             <label htmlFor="code" className="field-label">
-              Code
+              Kodas
             </label>
             <Input
               id="code"
@@ -99,7 +99,7 @@ export function ProjectForm({ mode, projectId, initialValues }: ProjectFormProps
 
           <div className="form-field">
             <label htmlFor="name" className="field-label">
-              Name
+              Pavadinimas
             </label>
             <Input
               id="name"
@@ -113,7 +113,7 @@ export function ProjectForm({ mode, projectId, initialValues }: ProjectFormProps
 
           <div className="form-field">
             <label htmlFor="location" className="field-label">
-              Location
+              Vieta
             </label>
             <Input
               id="location"
@@ -129,10 +129,10 @@ export function ProjectForm({ mode, projectId, initialValues }: ProjectFormProps
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Button type="submit" disabled={isSaving}>
-              {isSaving ? "Saving..." : mode === "create" ? "Create project" : "Save changes"}
+              {isSaving ? "Saugoma..." : mode === "create" ? "Kurti projekta" : "Issaugoti pakeitimus"}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/projects")}>
-              Cancel
+              Atsaukti
             </Button>
           </div>
         </form>

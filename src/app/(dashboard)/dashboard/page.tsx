@@ -34,11 +34,11 @@ export default async function DashboardPage() {
   ]);
 
   const stats = [
-    { title: "Total Tools", value: totalTools, trend: "Inventory scope", tone: "slate" as const },
-    { title: "Tools In Storage", value: inStorage, trend: "Ready for issue", tone: "emerald" as const },
-    { title: "Checked Out Tools", value: checkedOut, trend: "Currently in use", tone: "amber" as const },
-    { title: "Broken Tools", value: broken, trend: "Need inspection", tone: "rose" as const },
-    { title: "Lost Tools", value: lost, trend: "Critical control", tone: "rose" as const },
+    { title: "Visi irankiai", value: totalTools, trend: "Bendras kiekis", tone: "slate" as const },
+    { title: "Irankiai sandelyje", value: inStorage, trend: "Paruosta isdavimui", tone: "emerald" as const },
+    { title: "Paimti irankiai", value: checkedOut, trend: "Siuo metu naudojami", tone: "amber" as const },
+    { title: "Sugede irankiai", value: broken, trend: "Reikia patikros", tone: "rose" as const },
+    { title: "Prarasti irankiai", value: lost, trend: "Kritinis stebejimas", tone: "rose" as const },
   ];
 
   const toolsPerProject = projects.map((project) => ({
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
       <div className="page-header">
         <h2 className="page-title">{dictionary.common.dashboard}</h2>
         <p className="page-subtitle">
-          Real-time overview of inventory status, project allocation, and operational activity.
+          Realus irankiu bukles, paskirstymo projektams ir veiksmu suvestines vaizdas.
         </p>
       </div>
 
@@ -87,30 +87,30 @@ export default async function DashboardPage() {
         </div>
         <Card className="bg-gradient-to-br from-slate-900 to-slate-700 text-white">
           <CardHeader>
-            <CardTitle className="text-base font-semibold">Operational Summary</CardTitle>
+            <CardTitle className="text-base font-semibold">Operacine suvestine</CardTitle>
             <CardDescription className="text-slate-200">
-              Current system health snapshot for management review.
+              Esamos sistemos bukles santrauka administravimui.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-300">Utilization</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">Panaudojimas</p>
               <p className="mt-1 text-2xl font-semibold">
                 {totalTools > 0 ? `${Math.round((checkedOut / totalTools) * 100)}%` : "0%"}
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-300">Availability</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">Prieinamumas</p>
               <p className="mt-1 text-2xl font-semibold">
                 {totalTools > 0 ? `${Math.round((inStorage / totalTools) * 100)}%` : "0%"}
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-300">Maintenance</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">Prieziura</p>
               <p className="mt-1 text-2xl font-semibold">{broken}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-300">Critical Alerts</p>
+              <p className="text-xs uppercase tracking-wide text-slate-300">Kritiniai signalai</p>
               <p className="mt-1 text-2xl font-semibold">{lost}</p>
             </div>
           </CardContent>

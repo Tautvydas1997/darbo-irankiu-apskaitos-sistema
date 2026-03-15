@@ -25,8 +25,8 @@ export function ActivityTimeline({ items }: ActivityTimelineProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-slate-900">Recent Activity Timeline</CardTitle>
-        <CardDescription>Latest tool movement and status events.</CardDescription>
+        <CardTitle className="text-base font-semibold text-slate-900">Naujausiu veiksmu juosta</CardTitle>
+        <CardDescription>Naujausi irankiu judejimo ir statuso pokyciu ivykiai.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {items.map((item, index) => {

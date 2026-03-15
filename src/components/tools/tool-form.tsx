@@ -88,7 +88,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
       if (result?.fieldErrors) {
         setFieldErrors(result.fieldErrors);
       }
-      setSubmitError(result?.message ?? "Failed to save tool.");
+      setSubmitError(result?.message ?? "Nepavyko issaugoti irankio.");
       setIsSaving(false);
       return;
     }
@@ -100,9 +100,11 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
   return (
     <Card className="max-w-3xl">
       <CardHeader>
-        <CardTitle>{mode === "create" ? "Create tool" : "Edit tool"}</CardTitle>
+        <CardTitle>{mode === "create" ? "Kurti iranki" : "Redaguoti iranki"}</CardTitle>
         <CardDescription>
-          {mode === "create" ? "Register a new tool in inventory." : "Update tool data, assignment, and status."}
+          {mode === "create"
+            ? "Uzregistruokite nauja iranki apskaitos sistemoje."
+            : "Atnaujinkite irankio duomenis, priskyrima ir statusa."}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -110,7 +112,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
           <div className="form-grid">
             <div className="form-field">
               <label htmlFor="name" className="field-label">
-                Name
+                Pavadinimas
               </label>
               <Input id="name" value={values.name} onChange={(event) => updateValue("name", event.target.value)} required />
               {fieldErrors.name?.[0] ? <p className="text-sm text-rose-600">{fieldErrors.name[0]}</p> : null}
@@ -118,7 +120,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
             <div className="form-field">
               <label htmlFor="inventoryNumber" className="field-label">
-                Inventory Number
+                Inventoriaus numeris
               </label>
               <Input
                 id="inventoryNumber"
@@ -133,7 +135,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
             <div className="form-field">
               <label htmlFor="status" className="field-label">
-                Status
+                Statusas
               </label>
               <select
                 id="status"
@@ -152,7 +154,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
             <div className="form-field">
               <label htmlFor="categoryId" className="field-label">
-                Category
+                Kategorija
               </label>
               <select
                 id="categoryId"
@@ -161,7 +163,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
                 onChange={(event) => updateValue("categoryId", event.target.value)}
                 required
               >
-                <option value="">Select category</option>
+                <option value="">Pasirinkite kategorija</option>
                 {categories.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.label}
@@ -173,7 +175,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
             <div className="form-field">
               <label htmlFor="projectId" className="field-label">
-                Project
+                Projektas
               </label>
               <select
                 id="projectId"
@@ -181,7 +183,7 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
                 value={values.projectId}
                 onChange={(event) => updateValue("projectId", event.target.value)}
               >
-                <option value="">Unassigned</option>
+                <option value="">Nepriskirta</option>
                 {projects.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.label}
@@ -193,14 +195,14 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
           <div className="form-field">
             <label htmlFor="conditionNotes" className="field-label">
-              Condition Notes
+              Bukles pastabos
             </label>
             <textarea
               id="conditionNotes"
               className="app-textarea"
               value={values.conditionNotes}
               onChange={(event) => updateValue("conditionNotes", event.target.value)}
-              placeholder="Optional notes about current tool condition"
+              placeholder="Papildomos pastabos apie esama irankio bukle"
             />
             {fieldErrors.conditionNotes?.[0] ? (
               <p className="text-sm text-rose-600">{fieldErrors.conditionNotes[0]}</p>
@@ -211,10 +213,10 @@ export function ToolForm({ mode, toolId, categories, projects, initialValues }: 
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Button type="submit" disabled={isSaving}>
-              {isSaving ? "Saving..." : mode === "create" ? "Create tool" : "Save changes"}
+              {isSaving ? "Saugoma..." : mode === "create" ? "Kurti iranki" : "Issaugoti pakeitimus"}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/tools")}>
-              Cancel
+              Atsaukti
             </Button>
           </div>
         </form>

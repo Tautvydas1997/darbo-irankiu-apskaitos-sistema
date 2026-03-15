@@ -22,33 +22,33 @@ export default async function ProjectsPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="page-title">{dictionary.common.projects}</h2>
-          <p className="page-subtitle">Manage project records used in tool assignment and transactions.</p>
+          <p className="page-subtitle">Tvarkykite projektu sarasa, naudojama irankiu priskyrimui ir istorijai.</p>
         </div>
         {canManage ? (
           <Button asChild>
-            <Link href="/projects/new">Create project</Link>
+            <Link href="/projects/new">Kurti projekta</Link>
           </Button>
         ) : null}
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Projects</CardTitle>
-          <CardDescription>All active and historical projects in the system.</CardDescription>
+          <CardTitle>Projektai</CardTitle>
+          <CardDescription>Visi sistemoje registruoti projektai.</CardDescription>
         </CardHeader>
         <CardContent>
           {projects.length === 0 ? (
-            <p className="text-sm text-slate-600">No projects yet.</p>
+            <p className="text-sm text-slate-600">Projektu dar nera.</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
                 <thead>
                   <tr>
                     <th>Code</th>
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Created</th>
-                    <th>Actions</th>
+                    <th>Pavadinimas</th>
+                    <th>Vieta</th>
+                    <th>Sukurta</th>
+                    <th>Veiksmai</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -64,12 +64,12 @@ export default async function ProjectsPage() {
                         {canManage ? (
                           <div className="flex items-center gap-2">
                             <Button asChild size="sm" variant="outline">
-                              <Link href={`/projects/${project.id}/edit`}>Edit</Link>
+                              <Link href={`/projects/${project.id}/edit`}>Redaguoti</Link>
                             </Button>
                             <DeleteProjectButton projectId={project.id} />
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400">View only</span>
+                          <span className="text-xs text-slate-400">Tik perziura</span>
                         )}
                       </td>
                     </tr>

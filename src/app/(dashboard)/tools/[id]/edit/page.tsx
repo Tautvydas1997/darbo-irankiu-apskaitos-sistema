@@ -30,8 +30,8 @@ export default async function EditToolPage({ params }: EditToolPageProps) {
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">Edit tool</h2>
-        <p className="page-subtitle">Update assignments, status, and condition notes.</p>
+        <h2 className="page-title">Redaguoti iranki</h2>
+        <p className="page-subtitle">Atnaujinkite priskyrimus, statusa ir bukles pastabas.</p>
       </div>
 
       <ToolForm

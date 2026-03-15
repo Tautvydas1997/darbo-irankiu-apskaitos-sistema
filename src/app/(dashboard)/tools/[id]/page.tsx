@@ -45,41 +45,41 @@ export default async function ToolDetailsPage({ params }: ToolDetailsPageProps) 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="page-title">{tool.name}</h2>
-          <p className="page-subtitle">Tool details and QR code for scan-based access.</p>
+          <p className="page-subtitle">Irankio detales ir QR kodas skenavimui.</p>
         </div>
         <Button asChild variant="outline">
-          <Link href="/tools">Back to tools</Link>
+          <Link href="/tools">Atgal i irankius</Link>
         </Button>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Details</CardTitle>
-            <CardDescription>Core tool information and assignment status.</CardDescription>
+            <CardTitle>Detales</CardTitle>
+            <CardDescription>Pagrindine irankio informacija ir priskyrimo bukle.</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <p className="text-xs uppercase text-slate-500">Inventory Number</p>
+              <p className="text-xs uppercase text-slate-500">Inventoriaus numeris</p>
               <p className="mt-1 font-medium text-slate-900">{tool.inventoryNumber}</p>
             </div>
             <div>
-              <p className="text-xs uppercase text-slate-500">Status</p>
+              <p className="text-xs uppercase text-slate-500">Statusas</p>
               <p className="mt-1 font-medium text-slate-900">{formatEnumLabel(tool.status)}</p>
             </div>
             <div>
-              <p className="text-xs uppercase text-slate-500">Category</p>
+              <p className="text-xs uppercase text-slate-500">Kategorija</p>
               <p className="mt-1 font-medium text-slate-900">{tool.category.name}</p>
             </div>
             <div>
-              <p className="text-xs uppercase text-slate-500">Project</p>
+              <p className="text-xs uppercase text-slate-500">Projektas</p>
               <p className="mt-1 font-medium text-slate-900">
-                {tool.project ? `${tool.project.code} - ${tool.project.name}` : "Unassigned"}
+                {tool.project ? `${tool.project.code} - ${tool.project.name}` : "Nepriskirta"}
               </p>
             </div>
             <div className="sm:col-span-2">
-              <p className="text-xs uppercase text-slate-500">Condition Notes</p>
-              <p className="mt-1 text-slate-800">{tool.conditionNotes || "No notes"}</p>
+              <p className="text-xs uppercase text-slate-500">Bukles pastabos</p>
+              <p className="mt-1 text-slate-800">{tool.conditionNotes || "Pastabu nera"}</p>
             </div>
             <div className="sm:col-span-2">
               <p className="text-xs uppercase text-slate-500">QR Payload</p>
@@ -91,7 +91,7 @@ export default async function ToolDetailsPage({ params }: ToolDetailsPageProps) 
         <Card>
           <CardHeader>
             <CardTitle>QR Code</CardTitle>
-            <CardDescription>Scan to open tool record at {qrPath}</CardDescription>
+            <CardDescription>Nuskenuokite, kad atidarytumete irankio irasa {qrPath}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}

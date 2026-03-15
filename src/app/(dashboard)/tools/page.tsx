@@ -27,15 +27,15 @@ export default async function ToolsPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="page-title">{dictionary.common.tools}</h2>
-          <p className="page-subtitle">Track and manage all inventory tools with project/category assignment.</p>
+          <p className="page-subtitle">Stebekite ir valdykite irankius su projekto ir kategorijos priskyrimu.</p>
         </div>
         {canManage ? (
           <div className="flex items-center gap-2">
             <Button asChild variant="outline">
-              <Link href="/tools/qr-print">QR Print</Link>
+              <Link href="/tools/qr-print">QR spauda</Link>
             </Button>
             <Button asChild>
-              <Link href="/tools/new">Create tool</Link>
+              <Link href="/tools/new">Kurti iranki</Link>
             </Button>
           </div>
         ) : null}
@@ -43,23 +43,23 @@ export default async function ToolsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Tools</CardTitle>
-          <CardDescription>Registered tools and current assignment/status overview.</CardDescription>
+          <CardTitle>Irankiai</CardTitle>
+          <CardDescription>Registruoti irankiai ir ju esamas statusas.</CardDescription>
         </CardHeader>
         <CardContent>
           {tools.length === 0 ? (
-            <p className="text-sm text-slate-600">No tools yet.</p>
+            <p className="text-sm text-slate-600">Irankiu dar nera.</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
                 <thead>
                   <tr>
-                    <th>Tool Name</th>
-                    <th>Inventory Number</th>
-                    <th>Category</th>
-                    <th>Project</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>Irankio pavadinimas</th>
+                    <th>Inventoriaus numeris</th>
+                    <th>Kategorija</th>
+                    <th>Projektas</th>
+                    <th>Statusas</th>
+                    <th>Veiksmai</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -72,7 +72,7 @@ export default async function ToolsPage() {
                       </td>
                       <td>{tool.inventoryNumber}</td>
                       <td>{tool.category.name}</td>
-                      <td>{tool.project ? `${tool.project.code} - ${tool.project.name}` : "Unassigned"}</td>
+                      <td>{tool.project ? `${tool.project.code} - ${tool.project.name}` : "Nepriskirta"}</td>
                       <td>
                         <span className="status-pill">
                           {formatEnumLabel(tool.status)}
@@ -82,12 +82,12 @@ export default async function ToolsPage() {
                         {canManage ? (
                           <div className="flex items-center gap-2">
                             <Button asChild size="sm" variant="outline">
-                              <Link href={`/tools/${tool.id}/edit`}>Edit</Link>
+                              <Link href={`/tools/${tool.id}/edit`}>Redaguoti</Link>
                             </Button>
                             <DeleteToolButton toolId={tool.id} />
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400">View only</span>
+                          <span className="text-xs text-slate-400">Tik perziura</span>
                         )}
                       </td>
                     </tr>

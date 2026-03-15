@@ -42,7 +42,7 @@ export function MobileQrScanner() {
 
   const [isScanning, setIsScanning] = useState(false);
   const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
-  const [statusMessage, setStatusMessage] = useState("Tap Start Camera to begin scanning.");
+  const [statusMessage, setStatusMessage] = useState("Paspauskite \"Paleisti kamera\", kad pradeti skenavima.");
   const [scanError, setScanError] = useState<string | null>(null);
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [selectedDeviceId, setSelectedDeviceId] = useState<string>("");
@@ -54,7 +54,7 @@ export function MobileQrScanner() {
     const loadDevices = async () => {
       try {
         if (!window.isSecureContext) {
-          setScanError("Camera access requires HTTPS or localhost. For phone testing use a secure tunnel URL.");
+          setScanError("Kamerai reikia HTTPS arba localhost. Testavimui telefone naudokite saugu URL.");
           setHasCameraPermission(false);
           return;
         }
@@ -73,7 +73,7 @@ export function MobileQrScanner() {
         setSelectedDeviceId(rearCamera);
       } catch {
         if (!cancelled) {
-          setScanError("Unable to list camera devices.");
+          setScanError("Nepavyko nuskaityti kameros irenginiu saraso.");
         }
       }
     };
@@ -98,12 +98,12 @@ export function MobileQrScanner() {
       return;
     }
     if (!window.isSecureContext) {
-      setScanError("Camera is blocked on insecure HTTP. Open the app via HTTPS or localhost.");
+      setScanError("Kamera blokuojama nesaugioje HTTP aplinkoje. Atidarykite per HTTPS arba localhost.");
       return;
     }
 
     setScanError(null);
-    setStatusMessage("Point the camera at a tool QR code.");
+    setStatusMessage("Nukreipkite kamera i irankio QR koda.");
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -123,11 +123,11 @@ export function MobileQrScanner() {
 
           const nextTarget = normalizeQrTarget(result.getText());
           if (!nextTarget) {
-            setStatusMessage("QR scanned, but target is not recognized.");
+            setStatusMessage("QR nuskaitytas, bet nuoroda neatpazinta.");
             return;
           }
 
-          setStatusMessage("QR code detected. Redirecting...");
+          setStatusMessage("QR kodas aptiktas. Nukreipiama...");
           stopScanner();
           router.push(nextTarget);
         }
@@ -135,7 +135,7 @@ export function MobileQrScanner() {
       setIsScanning(true);
     } catch {
       setHasCameraPermission(false);
-      setScanError("Camera access failed. Please allow camera permission and retry.");
+      setScanError("Nepavyko pasiekti kameros. Suteikite leidima kamerai ir bandykite dar karta.");
       setIsScanning(false);
     }
   };
@@ -145,9 +145,9 @@ export function MobileQrScanner() {
       <div className="panel p-4">
         <h1 className="flex items-center gap-2 text-lg font-semibold text-slate-900">
           <ScanLine className="h-5 w-5" />
-          QR Scanner
+          QR skaitytuvas
         </h1>
-        <p className="mt-1 text-sm text-slate-600">Fast mobile scanning for tool identification and next actions.</p>
+        <p className="mt-1 text-sm text-slate-600">Greitas skenavimas irankio atpazinimui ir veiksmams objekte.</p>
       </div>
 
       <div className="relative overflow-hidden rounded-2xl border border-slate-300 bg-black shadow-md">
@@ -165,7 +165,7 @@ export function MobileQrScanner() {
       {devices.length > 1 ? (
         <div className="panel p-3">
           <label htmlFor="camera-select" className="mb-1 block text-xs font-medium uppercase text-slate-500">
-            Camera
+            Kamera
           </label>
           <select
             id="camera-select"
@@ -188,7 +188,7 @@ export function MobileQrScanner() {
           <p>{scanError}</p>
           {hasCameraPermission === false ? (
             <Button type="button" variant="outline" className="mt-2" onClick={startScanner}>
-              Request Camera Permission
+              Prasyti kameros leidimo
             </Button>
           ) : null}
         </div>
@@ -198,11 +198,11 @@ export function MobileQrScanner() {
         {!isScanning ? (
           <Button type="button" size="lg" className="h-12 text-base" onClick={startScanner}>
             <Camera className="mr-2 h-5 w-5" />
-            Start Camera
+            Paleisti kamera
           </Button>
         ) : (
           <Button type="button" size="lg" className="h-12 text-base" variant="outline" onClick={stopScanner}>
-            Stop Scan
+            Stabdyti skenavima
           </Button>
         )}
 
@@ -217,7 +217,7 @@ export function MobileQrScanner() {
           }}
         >
           <RotateCcw className="mr-2 h-4 w-4" />
-          Restart
+          Paleisti is naujo
         </Button>
       </div>
     </section>

@@ -11,7 +11,7 @@ export function DeleteToolButton({ toolId }: DeleteToolButtonProps) {
   const router = useRouter();
 
   const handleDelete = async () => {
-    const confirmed = window.confirm("Delete this tool?");
+    const confirmed = window.confirm("Ar tikrai norite istrinti si iranki?");
     if (!confirmed) {
       return;
     }
@@ -21,7 +21,7 @@ export function DeleteToolButton({ toolId }: DeleteToolButtonProps) {
     });
 
     if (!response.ok) {
-      window.alert("Failed to delete tool.");
+      window.alert("Nepavyko istrinti irankio.");
       return;
     }
 
@@ -30,7 +30,7 @@ export function DeleteToolButton({ toolId }: DeleteToolButtonProps) {
 
   return (
     <Button type="button" size="sm" variant="outline" onClick={handleDelete}>
-      Delete
+      Istrinti
     </Button>
   );
 }

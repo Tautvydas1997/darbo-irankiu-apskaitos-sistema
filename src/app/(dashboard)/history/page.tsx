@@ -110,13 +110,13 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
     <section className="page-shell">
       <div>
         <h2 className="page-title">{dictionary.common.history}</h2>
-        <p className="page-subtitle">Review all tool transactions with advanced filters.</p>
+        <p className="page-subtitle">Perziurekite visus irankiu veiksmus su issamiais filtrais.</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Filters</CardTitle>
-          <CardDescription>Filter history by tool, employee, project code, action type, and date range.</CardDescription>
+          <CardTitle>Filtrai</CardTitle>
+          <CardDescription>Filtruokite istorija pagal iranki, darbuotoja, projekta, veiksma ir data.</CardDescription>
         </CardHeader>
         <CardContent>
           <form method="get" className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-5">
@@ -125,7 +125,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
               defaultValue={filters.toolId}
               className="app-select"
             >
-              <option value="">All tools</option>
+              <option value="">Visi irankiai</option>
               {tools.map((tool) => (
                 <option key={tool.id} value={tool.id}>
                   {tool.name} ({tool.inventoryNumber})
@@ -138,7 +138,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
               name="employee"
               defaultValue={filters.employee}
               className="app-select"
-              placeholder="Employee first or last name"
+              placeholder="Darbuotojo vardas arba pavarde"
             />
 
             <input
@@ -146,11 +146,11 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
               name="projectCode"
               defaultValue={filters.projectCode}
               className="app-select"
-              placeholder="Project code (e.g. P2652)"
+              placeholder="Projekto kodas (pvz. P2652)"
             />
 
             <select name="actionType" defaultValue={filters.actionType} className="app-select">
-              <option value="">All action types</option>
+              <option value="">Visi veiksmu tipai</option>
               {Object.values(ActionType).map((actionType) => (
                 <option key={actionType} value={actionType}>
                   {formatEnumLabel(actionType)}
@@ -180,13 +180,13 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
                 defaultChecked={filters.unknownOnly}
                 className="h-4 w-4 rounded border-slate-300"
               />
-              Only unknown project codes
+              Rodyti tik neegzistuojanciu projektu kodus
             </label>
 
             <div className="flex items-center gap-2 md:col-span-2 xl:col-span-5">
-              <Button type="submit">Apply filters</Button>
+              <Button type="submit">Taikyti filtrus</Button>
               <Button asChild type="button" variant="outline">
-                <Link href="/history">Reset</Link>
+                <Link href="/history">Atstatyti</Link>
               </Button>
             </div>
           </form>
@@ -195,23 +195,23 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Transactions</CardTitle>
-          <CardDescription>All actions performed on tools.</CardDescription>
+          <CardTitle>Irankiu istorija</CardTitle>
+          <CardDescription>Visi su irankiais atlikti veiksmai.</CardDescription>
         </CardHeader>
         <CardContent>
           {transactions.length === 0 ? (
-            <p className="text-sm text-slate-600">No transactions found for selected filters.</p>
+            <p className="text-sm text-slate-600">Pagal pasirinktus filtrus irasu nerasta.</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
                 <thead>
                   <tr>
-                    <th>Tool</th>
-                    <th>Action</th>
-                    <th>Employee</th>
-                    <th>Project</th>
-                    <th>Date</th>
-                    <th>Notes</th>
+                    <th>Irankis</th>
+                    <th>Veiksmas</th>
+                    <th>Darbuotojas</th>
+                    <th>Projektas</th>
+                    <th>Data</th>
+                    <th>Pastabos</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -228,10 +228,10 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
                         ) : (
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
-                              {item.projectCode} (not in projects)
+                              {item.projectCode} (projekto nera sarase)
                             </span>
                             <Button asChild size="sm" variant="outline">
-                              <Link href={`/projects/new?code=${encodeURIComponent(item.projectCode)}`}>Add project</Link>
+                              <Link href={`/projects/new?code=${encodeURIComponent(item.projectCode)}`}>Prideti projekta</Link>
                             </Button>
                           </div>
                         )}

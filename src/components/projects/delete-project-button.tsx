@@ -11,7 +11,7 @@ export function DeleteProjectButton({ projectId }: DeleteProjectButtonProps) {
   const router = useRouter();
 
   const handleDelete = async () => {
-    const confirmed = window.confirm("Delete this project?");
+    const confirmed = window.confirm("Ar tikrai norite istrinti si projekta?");
     if (!confirmed) {
       return;
     }
@@ -21,7 +21,7 @@ export function DeleteProjectButton({ projectId }: DeleteProjectButtonProps) {
     });
 
     if (!response.ok) {
-      window.alert("Failed to delete project.");
+      window.alert("Nepavyko istrinti projekto.");
       return;
     }
 
@@ -30,7 +30,7 @@ export function DeleteProjectButton({ projectId }: DeleteProjectButtonProps) {
 
   return (
     <Button type="button" size="sm" variant="outline" onClick={handleDelete}>
-      Delete
+      Istrinti
     </Button>
   );
 }

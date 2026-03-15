@@ -60,7 +60,7 @@ export function LoginForm({ dictionary }: LoginFormProps) {
             <Input
               id="email"
               type="email"
-              placeholder="name@company.com"
+              placeholder="vardas@imone.lt"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               required

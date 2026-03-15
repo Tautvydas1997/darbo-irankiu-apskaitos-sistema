@@ -24,7 +24,7 @@ export function QrActions({ dataUrl, fileName }: QrActionsProps) {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Print QR</title>
+          <title>Spausdinti QR</title>
           <style>
             body { font-family: Arial, sans-serif; display: grid; place-items: center; margin: 0; height: 100vh; }
             .wrap { text-align: center; }
@@ -46,10 +46,10 @@ export function QrActions({ dataUrl, fileName }: QrActionsProps) {
   return (
     <div className="flex items-center gap-2">
       <Button type="button" size="sm" variant="outline" onClick={downloadQr}>
-        Download QR
+        Atsisiusti QR
       </Button>
       <Button type="button" size="sm" variant="outline" onClick={printQr}>
-        Print QR
+        Spausdinti QR
       </Button>
     </div>
   );

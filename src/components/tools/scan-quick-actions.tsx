@@ -16,9 +16,9 @@ type ScanQuickActionsProps = {
 type QuickAction = "CHECK_OUT" | "RETURN" | "REPORT_BROKEN";
 
 const ACTIONS: Array<{ key: QuickAction; label: string; icon: ComponentType<{ className?: string }> }> = [
-  { key: "CHECK_OUT", label: "Take Tool", icon: ClipboardCheck },
-  { key: "RETURN", label: "Return Tool", icon: CheckCircle2 },
-  { key: "REPORT_BROKEN", label: "Report Broken", icon: AlertTriangle },
+  { key: "CHECK_OUT", label: "Paimti iranki", icon: ClipboardCheck },
+  { key: "RETURN", label: "Grazinti iranki", icon: CheckCircle2 },
+  { key: "REPORT_BROKEN", label: "Pranesti apie gedima", icon: AlertTriangle },
 ];
 
 export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
@@ -32,7 +32,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
   const runAction = async (action: QuickAction) => {
     if (!firstName.trim() || !lastName.trim() || !projectCode.trim()) {
-      window.alert("Please enter first name, last name, and project code.");
+      window.alert("Iveskite varda, pavarde ir projekto koda.");
       return;
     }
 
@@ -54,11 +54,11 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
     if (!response.ok) {
       const error = (await response.json().catch(() => null)) as { message?: string } | null;
-      window.alert(error?.message ?? "Quick action failed.");
+      window.alert(error?.message ?? "Greitas veiksmas nepavyko.");
       return;
     }
 
-    setSuccessMessage(`Action "${itemLabel(action)}" completed successfully.`);
+    setSuccessMessage(`Veiksmas "${itemLabel(action)}" sekmingai atliktas.`);
     router.refresh();
   };
 
@@ -68,8 +68,8 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Employee Actions</CardTitle>
-        <CardDescription>Enter your details and select an action.</CardDescription>
+        <CardTitle>Darbuotojo veiksmai</CardTitle>
+        <CardDescription>Iveskite duomenis ir pasirinkite veiksma.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
         {successMessage ? (
@@ -85,7 +85,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
               <Button asChild type="button" variant="outline">
                 <Link href="/scan">
                   <ScanLine className="mr-2 h-4 w-4" />
-                  Scan Another QR
+                  Skenuoti kita QR
                 </Link>
               </Button>
             </div>
@@ -95,7 +95,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <div className="form-field">
             <label htmlFor="firstName" className="field-label">
-              First Name
+              Vardas
             </label>
             <Input
               id="firstName"
@@ -107,7 +107,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
           <div className="form-field">
             <label htmlFor="lastName" className="field-label">
-              Last Name
+              Pavarde
             </label>
             <Input
               id="lastName"
@@ -119,7 +119,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
           <div className="form-field sm:col-span-2">
             <label htmlFor="projectCode" className="field-label">
-              Project Code
+              Projekto kodas
             </label>
             <Input
               id="projectCode"
@@ -131,13 +131,13 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
 
           <div className="form-field sm:col-span-2">
             <label htmlFor="notes" className="field-label">
-              Notes (optional)
+              Pastabos (nebutina)
             </label>
             <Input
               id="notes"
               value={notes}
               onChange={(event) => setNotes(event.target.value)}
-              placeholder="Additional note"
+              placeholder="Papildoma pastaba"
             />
           </div>
         </div>
@@ -156,7 +156,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
                 disabled={Boolean(pendingAction) || Boolean(successMessage)}
               >
                 <Icon className="mr-2 h-4 w-4" />
-                {loading ? "Saving..." : item.label}
+                {loading ? "Saugoma..." : item.label}
               </Button>
             );
           })}
@@ -166,7 +166,7 @@ export function ScanQuickActions({ toolId }: ScanQuickActionsProps) {
           <Button asChild className="h-12 text-base">
             <Link href="/scan">
               <ScanLine className="mr-2 h-4 w-4" />
-              Scan Next Tool
+              Skenuoti kita iranki
             </Link>
           </Button>
         </div>

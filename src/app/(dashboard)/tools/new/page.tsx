@@ -19,8 +19,8 @@ export default async function NewToolPage() {
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">New tool</h2>
-        <p className="page-subtitle">Register a tool and assign it to category/project.</p>
+        <h2 className="page-title">Naujas irankis</h2>
+        <p className="page-subtitle">Uzregistruokite iranki ir priskirkite ji kategorijai bei projektui.</p>
       </div>
 
       <ToolForm

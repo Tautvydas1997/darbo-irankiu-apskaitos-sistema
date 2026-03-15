@@ -27,8 +27,8 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">Edit project</h2>
-        <p className="page-subtitle">Update project details used by tool transactions.</p>
+        <h2 className="page-title">Redaguoti projekta</h2>
+        <p className="page-subtitle">Atnaujinkite projekto duomenis, naudojamus irankiu istorijoje.</p>
       </div>
 
       <ProjectForm

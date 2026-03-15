@@ -4,8 +4,8 @@ import { AppSessionProvider } from "@/components/providers/session-provider";
 import { getLocaleFromCookie } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Work Tool Inventory",
-  description: "Work tool inventory management system",
+  title: "Darbo irankiu apskaita",
+  description: "Darbo irankiu apskaitos valdymo sistema",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

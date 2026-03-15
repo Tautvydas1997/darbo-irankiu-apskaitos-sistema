@@ -21,8 +21,8 @@ export default async function NewProjectPage({ searchParams }: NewProjectPagePro
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">New project</h2>
-        <p className="page-subtitle">Add a project for tool allocation and tracking.</p>
+        <h2 className="page-title">Naujas projektas</h2>
+        <p className="page-subtitle">Pridekite projekta irankiu paskirstymui ir stebejimui.</p>
       </div>
       <ProjectForm
         mode="create"

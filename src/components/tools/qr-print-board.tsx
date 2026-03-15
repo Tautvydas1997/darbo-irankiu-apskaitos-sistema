@@ -34,16 +34,16 @@ export function QrPrintBoard({ tools }: QrPrintBoardProps) {
     <section className="page-shell">
       <Card className="no-print">
         <CardHeader>
-          <CardTitle>QR Sticker Print</CardTitle>
-          <CardDescription>Select tools to include in printable sticker sheet.</CardDescription>
+          <CardTitle>QR lipduku spauda</CardTitle>
+          <CardDescription>Pasirinkite irankius, kuriuos norite itraukti i spausdinimo lapa.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Button type="button" variant="outline" size="sm" onClick={toggleAll}>
-              {allSelected ? "Unselect all" : "Select all"}
+              {allSelected ? "Nuzymeti visus" : "Pazymeti visus"}
             </Button>
             <Button type="button" size="sm" onClick={() => window.print()} disabled={selectedIds.length === 0}>
-              Print selected ({selectedIds.length})
+              Spausdinti pazymetus ({selectedIds.length})
             </Button>
           </div>
 
@@ -51,9 +51,9 @@ export function QrPrintBoard({ tools }: QrPrintBoardProps) {
             <table className="app-table">
               <thead className="sticky top-0 bg-slate-50">
                 <tr>
-                  <th>Select</th>
-                  <th>Tool Name</th>
-                  <th>Inventory Number</th>
+                  <th>Pasirinkti</th>
+                  <th>Irankio pavadinimas</th>
+                  <th>Inventoriaus numeris</th>
                 </tr>
               </thead>
               <tbody>
@@ -64,7 +64,7 @@ export function QrPrintBoard({ tools }: QrPrintBoardProps) {
                         type="checkbox"
                         checked={selectedSet.has(tool.id)}
                         onChange={() => toggleTool(tool.id)}
-                        aria-label={`Select ${tool.name}`}
+                        aria-label={`Pasirinkti ${tool.name}`}
                       />
                     </td>
                     <td className="text-slate-800">{tool.name}</td>
