@@ -14,6 +14,7 @@ import { pickLocaleText } from "@/lib/i18n/localize";
 type ScanQuickActionsProps = {
   toolId: string;
   locale: Locale;
+  toolStatus: "IN_STORAGE" | "CHECKED_OUT" | "BROKEN" | "LOST" | "IN_REPAIR";
 };
 
 type QuickAction = "CHECK_OUT" | "RETURN" | "REPORT_BROKEN";
@@ -24,7 +25,7 @@ const ACTIONS: Array<{ key: QuickAction; icon: ComponentType<{ className?: strin
   { key: "REPORT_BROKEN", icon: AlertTriangle },
 ];
 
-export function ScanQuickActions({ toolId, locale }: ScanQuickActionsProps) {
+export function ScanQuickActions({ toolId, locale, toolStatus }: ScanQuickActionsProps) {
   const router = useRouter();
   const [pendingAction, setPendingAction] = useState<QuickAction | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -33,7 +34,47 @@ export function ScanQuickActions({ toolId, locale }: ScanQuickActionsProps) {
   const [projectCode, setProjectCode] = useState("");
   const [notes, setNotes] = useState("");
 
+  const isActionAllowed = (action: QuickAction) => {
+    if (action === "CHECK_OUT") {
+      return toolStatus === "IN_STORAGE";
+    }
+    if (action === "RETURN") {
+      return toolStatus === "CHECKED_OUT" || toolStatus === "BROKEN";
+    }
+    return toolStatus === "CHECKED_OUT";
+  };
+
+  const actionDisabledReason = (action: QuickAction) => {
+    if (isActionAllowed(action)) {
+      return null;
+    }
+    if (action === "CHECK_OUT") {
+      return pickLocaleText(
+        locale,
+        "Irankis jau paimtas arba nepasiekiamas. Pirma grazinkite ji i sandeli.",
+        "Tool is already taken or unavailable. Return it to warehouse first."
+      );
+    }
+    if (action === "RETURN") {
+      return pickLocaleText(
+        locale,
+        "Grazinti galima tik paimta arba pazymeta sugedusia iranki.",
+        "Only checked out or broken tools can be returned."
+      );
+    }
+    return pickLocaleText(
+      locale,
+      "Gedima galima pranesti tik kai irankis yra paimtas.",
+      "You can report broken only when the tool is checked out."
+    );
+  };
+
   const runAction = async (action: QuickAction) => {
+    if (!isActionAllowed(action)) {
+      window.alert(actionDisabledReason(action) ?? pickLocaleText(locale, "Veiksmas neleidziamas.", "Action is not allowed."));
+      return;
+    }
+
     if (!firstName.trim() || !lastName.trim() || !projectCode.trim()) {
       window.alert(pickLocaleText(locale, "Iveskite varda, pavarde ir projekto koda.", "Please enter first name, last name, and project code."));
       return;
@@ -159,18 +200,24 @@ export function ScanQuickActions({ toolId, locale }: ScanQuickActionsProps) {
           {ACTIONS.map((item) => {
             const Icon = item.icon;
             const loading = pendingAction === item.key;
+            const disabledReason = actionDisabledReason(item.key);
             return (
-              <Button
-                key={item.key}
-                type="button"
-                variant="outline"
-                className="h-12 justify-start text-base"
-                onClick={() => runAction(item.key)}
-                disabled={Boolean(pendingAction) || Boolean(successMessage)}
-              >
-                <Icon className="mr-2 h-4 w-4" />
-                {loading ? pickLocaleText(locale, "Saugoma...", "Saving...") : itemLabel(item.key)}
-              </Button>
+              <div key={item.key} className="space-y-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="h-12 justify-start text-base"
+                  onClick={() => runAction(item.key)}
+                  disabled={Boolean(pendingAction) || Boolean(successMessage) || Boolean(disabledReason)}
+                  title={disabledReason ?? undefined}
+                >
+                  <Icon className="mr-2 h-4 w-4" />
+                  {loading ? pickLocaleText(locale, "Saugoma...", "Saving...") : itemLabel(item.key)}
+                </Button>
+                {disabledReason ? (
+                  <p className="px-1 text-xs text-amber-700">{disabledReason}</p>
+                ) : null}
+              </div>
             );
           })}
         </div>

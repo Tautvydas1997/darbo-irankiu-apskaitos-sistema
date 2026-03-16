@@ -68,7 +68,7 @@ export default async function PublicToolPage({ params }: PublicToolPageProps) {
           </CardContent>
         </Card>
 
-        <ScanQuickActions toolId={tool.id} locale={locale} />
+        <ScanQuickActions toolId={tool.id} locale={locale} toolStatus={tool.status} />
       </div>
     </main>
   );
