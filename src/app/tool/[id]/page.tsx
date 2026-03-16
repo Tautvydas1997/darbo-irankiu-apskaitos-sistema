@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
 import { formatEnumLabel } from "@/lib/formatters";
+import { getScannerSessionFromCookies } from "@/lib/employee-auth";
 import { getLocaleFromCookie } from "@/lib/i18n";
 import { pickLocaleText } from "@/lib/i18n/localize";
 import { prisma } from "@/lib/prisma";
@@ -14,6 +15,17 @@ type PublicToolPageProps = {
 
 export default async function PublicToolPage({ params }: PublicToolPageProps) {
   const locale = getLocaleFromCookie();
+  const scannerSession = getScannerSessionFromCookies();
+  const activeScannerEmployee = scannerSession
+    ? await prisma.employeeUser.findFirst({
+        where: { id: scannerSession.employeeUserId, isActive: true },
+        select: {
+          employeeId: true,
+          firstName: true,
+          lastName: true,
+        },
+      })
+    : null;
   const tool = await prisma.tool.findUnique({
     where: { id: params.id },
     include: {
@@ -68,7 +80,12 @@ export default async function PublicToolPage({ params }: PublicToolPageProps) {
           </CardContent>
         </Card>
 
-        <ScanQuickActions toolId={tool.id} locale={locale} toolStatus={tool.status} />
+        <ScanQuickActions
+          toolId={tool.id}
+          locale={locale}
+          toolStatus={tool.status}
+          scannerEmployee={activeScannerEmployee}
+        />
       </div>
     </main>
   );

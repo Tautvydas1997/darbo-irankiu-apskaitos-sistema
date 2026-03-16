@@ -1,12 +1,11 @@
 import { ActionType, ToolStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getScannerSessionFromCookies } from "@/lib/employee-auth";
 import { prisma } from "@/lib/prisma";
 
 const bodySchema = z.object({
   action: z.enum(["CHECK_OUT", "RETURN", "REPORT_BROKEN"]),
-  firstName: z.string().trim().min(2, "First name is required"),
-  lastName: z.string().trim().min(2, "Last name is required"),
   projectCode: z.string().trim().toUpperCase().regex(/^P\d{4}$/, "Project code must match format P2652"),
   notes: z.string().trim().max(500).optional().nullable(),
 });
@@ -33,6 +32,24 @@ const ALLOWED_CURRENT_STATUSES: Record<ActionType, ToolStatus[]> = {
 };
 
 export async function PATCH(request: Request, context: RouteContext) {
+  const scannerSession = getScannerSessionFromCookies();
+  if (!scannerSession) {
+    return NextResponse.json({ message: "Scanner authentication required" }, { status: 401 });
+  }
+
+  const employee = await prisma.employeeUser.findUnique({
+    where: { id: scannerSession.employeeUserId },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      isActive: true,
+    },
+  });
+  if (!employee || !employee.isActive) {
+    return NextResponse.json({ message: "Scanner session is not valid" }, { status: 401 });
+  }
+
   const body = await request.json();
   const parsed = bodySchema.safeParse(body);
   if (!parsed.success) {
@@ -90,9 +107,10 @@ export async function PATCH(request: Request, context: RouteContext) {
         data: {
           toolId: context.params.id,
           projectId: project?.id ?? null,
+          employeeUserId: employee.id,
           projectCode: parsed.data.projectCode,
-          employeeFirstName: parsed.data.firstName,
-          employeeLastName: parsed.data.lastName,
+          employeeFirstName: employee.firstName,
+          employeeLastName: employee.lastName,
           actionType: parsed.data.action,
           notes: parsed.data.notes ?? `Quick action from mobile tool page: ${parsed.data.action}`,
         },

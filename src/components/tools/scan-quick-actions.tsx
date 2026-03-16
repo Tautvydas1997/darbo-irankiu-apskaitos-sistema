@@ -15,6 +15,11 @@ type ScanQuickActionsProps = {
   toolId: string;
   locale: Locale;
   toolStatus: "IN_STORAGE" | "CHECKED_OUT" | "BROKEN" | "LOST" | "IN_REPAIR";
+  scannerEmployee: {
+    employeeId: string;
+    firstName: string;
+    lastName: string;
+  } | null;
 };
 
 type QuickAction = "CHECK_OUT" | "RETURN" | "REPORT_BROKEN";
@@ -25,12 +30,10 @@ const ACTIONS: Array<{ key: QuickAction; icon: ComponentType<{ className?: strin
   { key: "REPORT_BROKEN", icon: AlertTriangle },
 ];
 
-export function ScanQuickActions({ toolId, locale, toolStatus }: ScanQuickActionsProps) {
+export function ScanQuickActions({ toolId, locale, toolStatus, scannerEmployee }: ScanQuickActionsProps) {
   const router = useRouter();
   const [pendingAction, setPendingAction] = useState<QuickAction | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [projectCode, setProjectCode] = useState("");
   const [notes, setNotes] = useState("");
 
@@ -70,13 +73,18 @@ export function ScanQuickActions({ toolId, locale, toolStatus }: ScanQuickAction
   };
 
   const runAction = async (action: QuickAction) => {
+    if (!scannerEmployee) {
+      window.alert(pickLocaleText(locale, "Pirma prisijunkite skaitytuve su darbuotojo ID.", "Sign in with employee ID in scanner first."));
+      return;
+    }
+
     if (!isActionAllowed(action)) {
       window.alert(actionDisabledReason(action) ?? pickLocaleText(locale, "Veiksmas neleidziamas.", "Action is not allowed."));
       return;
     }
 
-    if (!firstName.trim() || !lastName.trim() || !projectCode.trim()) {
-      window.alert(pickLocaleText(locale, "Iveskite varda, pavarde ir projekto koda.", "Please enter first name, last name, and project code."));
+    if (!projectCode.trim()) {
+      window.alert(pickLocaleText(locale, "Iveskite projekto koda.", "Please enter project code."));
       return;
     }
 
@@ -87,8 +95,6 @@ export function ScanQuickActions({ toolId, locale, toolStatus }: ScanQuickAction
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         action,
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
         projectCode: projectCode.trim().toUpperCase(),
         notes: notes.trim() || null,
       }),
@@ -123,9 +129,27 @@ export function ScanQuickActions({ toolId, locale, toolStatus }: ScanQuickAction
     <Card>
       <CardHeader>
         <CardTitle>{pickLocaleText(locale, "Darbuotojo veiksmai", "Employee actions")}</CardTitle>
-        <CardDescription>{pickLocaleText(locale, "Iveskite duomenis ir pasirinkite veiksma.", "Enter your details and select an action.")}</CardDescription>
+        <CardDescription>{pickLocaleText(locale, "Iveskite projekto koda ir pasirinkite veiksma.", "Enter project code and choose an action.")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
+        {scannerEmployee ? (
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <p className="text-xs uppercase tracking-wide text-slate-500">{pickLocaleText(locale, "Prisijunges darbuotojas", "Signed-in employee")}</p>
+            <p className="text-sm font-medium text-slate-900">
+              {scannerEmployee.firstName} {scannerEmployee.lastName}
+            </p>
+            <p className="text-xs text-slate-500">{scannerEmployee.employeeId}</p>
+          </div>
+        ) : (
+          <div className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-800">
+            {pickLocaleText(
+              locale,
+              "Veiksmams atlikti pirmiausia prisijunkite skaitytuve su darbuotojo ID.",
+              "Sign in with employee ID in scanner first to perform actions."
+            )}
+          </div>
+        )}
+
         {successMessage ? (
           <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-3">
             <p className="text-sm font-medium text-emerald-800">{successMessage}</p>
@@ -146,32 +170,8 @@ export function ScanQuickActions({ toolId, locale, toolStatus }: ScanQuickAction
           </div>
         ) : null}
 
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2">
           <div className="form-field">
-            <label htmlFor="firstName" className="field-label">
-              {pickLocaleText(locale, "Vardas", "First Name")}
-            </label>
-            <Input
-              id="firstName"
-              value={firstName}
-              onChange={(event) => setFirstName(event.target.value)}
-              placeholder="Jonas"
-            />
-          </div>
-
-          <div className="form-field">
-            <label htmlFor="lastName" className="field-label">
-              {pickLocaleText(locale, "Pavarde", "Last Name")}
-            </label>
-            <Input
-              id="lastName"
-              value={lastName}
-              onChange={(event) => setLastName(event.target.value)}
-              placeholder="Petrauskas"
-            />
-          </div>
-
-          <div className="form-field sm:col-span-2">
             <label htmlFor="projectCode" className="field-label">
               {pickLocaleText(locale, "Projekto kodas", "Project Code")}
             </label>
@@ -208,7 +208,7 @@ export function ScanQuickActions({ toolId, locale, toolStatus }: ScanQuickAction
                   variant="outline"
                   className="h-12 justify-start text-base"
                   onClick={() => runAction(item.key)}
-                  disabled={Boolean(pendingAction) || Boolean(successMessage) || Boolean(disabledReason)}
+                  disabled={Boolean(pendingAction) || Boolean(successMessage) || Boolean(disabledReason) || !scannerEmployee}
                   title={disabledReason ?? undefined}
                 >
                   <Icon className="mr-2 h-4 w-4" />

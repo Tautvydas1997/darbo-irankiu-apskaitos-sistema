@@ -32,6 +32,20 @@ model AdminUser {
   @@index([email])
 }
 
+model EmployeeUser {
+  id               String            @id @default(cuid())
+  employeeId       String            @unique
+  firstName        String
+  lastName         String
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  toolTransactions ToolTransaction[]
+
+  @@index([employeeId])
+  @@index([isActive])
+}
+
 model Project {
   id               String            @id @default(cuid())
   code             String            @unique
@@ -75,6 +89,7 @@ model ToolTransaction {
   id                String     @id @default(cuid())
   toolId            String
   projectId         String?
+  employeeUserId    String?
   projectCode       String
   employeeFirstName String
   employeeLastName  String
@@ -83,9 +98,11 @@ model ToolTransaction {
   createdAt         DateTime   @default(now())
   tool              Tool       @relation(fields: [toolId], references: [id], onDelete: Cascade)
   project           Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  employeeUser      EmployeeUser? @relation(fields: [employeeUserId], references: [id], onDelete: SetNull)
 
   @@index([toolId])
   @@index([projectId])
+  @@index([employeeUserId])
   @@index([projectCode])
   @@index([employeeFirstName])
   @@index([employeeLastName])

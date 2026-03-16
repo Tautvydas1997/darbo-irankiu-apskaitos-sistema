@@ -3,7 +3,7 @@ import { withAuth } from "next-auth/middleware";
 import { AUTH_BYPASS } from "@/lib/env";
 import { hasAdminAccess } from "@/lib/permissions";
 
-const ADMIN_ONLY_PATHS = ["/dashboard", "/tools", "/projects", "/history", "/settings"];
+const ADMIN_ONLY_PATHS = ["/dashboard", "/tools", "/projects", "/users", "/history", "/settings"];
 
 export default withAuth(
   function middleware(request) {
@@ -31,5 +31,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/tools/:path*", "/projects/:path*", "/history/:path*", "/settings/:path*"],
+  matcher: ["/dashboard/:path*", "/tools/:path*", "/projects/:path*", "/users/:path*", "/history/:path*", "/settings/:path*"],
 };

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wrench, FolderKanban, History, Settings, LayoutDashboard, QrCode } from "lucide-react";
+import { Wrench, FolderKanban, History, Settings, LayoutDashboard, QrCode, Users } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 
 type SidebarProps = {
@@ -18,6 +18,7 @@ const NAV: NavItem[] = [
   { href: "/dashboard", icon: LayoutDashboard, key: "dashboard" },
   { href: "/tools", icon: Wrench, key: "tools" },
   { href: "/projects", icon: FolderKanban, key: "projects" },
+  { href: "/users", icon: Users, key: "employees" },
   { href: "/history", icon: History, key: "history" },
   { href: "/tools/qr-print", icon: QrCode, key: "tools", label: "QR spauda" },
   { href: "/settings/profile", icon: Settings, key: "settings" },
