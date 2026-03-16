@@ -6,6 +6,7 @@ import { getLocaleFromCookie } from "@/lib/i18n";
 import { pickLocaleText } from "@/lib/i18n/localize";
 import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { EmployeeScanLogin } from "@/components/scan/employee-scan-login";
 import { ScanQuickActions } from "@/components/tools/scan-quick-actions";
 import { getToolQrPayload } from "@/lib/tool-qr";
 
@@ -80,12 +81,16 @@ export default async function PublicToolPage({ params }: PublicToolPageProps) {
           </CardContent>
         </Card>
 
-        <ScanQuickActions
-          toolId={tool.id}
-          locale={locale}
-          toolStatus={tool.status}
-          scannerEmployee={activeScannerEmployee}
-        />
+        {activeScannerEmployee ? (
+          <ScanQuickActions
+            toolId={tool.id}
+            locale={locale}
+            toolStatus={tool.status}
+            scannerEmployee={activeScannerEmployee}
+          />
+        ) : (
+          <EmployeeScanLogin locale={locale} returnTo={`/tool/${tool.id}`} />
+        )}
       </div>
     </main>
   );

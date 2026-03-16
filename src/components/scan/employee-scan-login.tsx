@@ -10,9 +10,10 @@ import { pickLocaleText } from "@/lib/i18n/localize";
 
 type EmployeeScanLoginProps = {
   locale: Locale;
+  returnTo?: string;
 };
 
-export function EmployeeScanLogin({ locale }: EmployeeScanLoginProps) {
+export function EmployeeScanLogin({ locale, returnTo }: EmployeeScanLoginProps) {
   const router = useRouter();
   const [employeeId, setEmployeeId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +37,11 @@ export function EmployeeScanLogin({ locale }: EmployeeScanLoginProps) {
           pickLocaleText(locale, "Nepavyko prisijungti prie skaitytuvo.", "Failed to sign in to scanner.")
       );
       setIsLoading(false);
+      return;
+    }
+
+    if (returnTo) {
+      router.push(returnTo);
       return;
     }
 
