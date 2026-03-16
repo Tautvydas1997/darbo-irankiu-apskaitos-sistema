@@ -24,28 +24,39 @@ export function EmployeeScanLogin({ locale, returnTo }: EmployeeScanLoginProps) 
     setIsLoading(true);
     setErrorMessage(null);
 
-    const response = await fetch("/api/scan-auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ employeeId: employeeId.trim().toUpperCase() }),
-    });
-    const result = (await response.json().catch(() => null)) as { message?: string } | null;
+    try {
+      const response = await fetch("/api/scan-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ employeeId: employeeId.trim().toUpperCase() }),
+      });
+      const result = (await response.json().catch(() => null)) as { message?: string } | null;
 
-    if (!response.ok) {
+      if (!response.ok) {
+        setErrorMessage(
+          result?.message ??
+            pickLocaleText(locale, "Nepavyko prisijungti prie skaitytuvo.", "Failed to sign in to scanner.")
+        );
+        return;
+      }
+
+      if (returnTo) {
+        router.push(returnTo);
+        return;
+      }
+
+      router.refresh();
+    } catch {
       setErrorMessage(
-        result?.message ??
-          pickLocaleText(locale, "Nepavyko prisijungti prie skaitytuvo.", "Failed to sign in to scanner.")
+        pickLocaleText(
+          locale,
+          "Nepavyko susisiekti su serveriu. Patikrinkite rysi ir bandykite dar karta.",
+          "Unable to reach server. Check your connection and try again."
+        )
       );
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    if (returnTo) {
-      router.push(returnTo);
-      return;
-    }
-
-    router.refresh();
   };
 
   return (
