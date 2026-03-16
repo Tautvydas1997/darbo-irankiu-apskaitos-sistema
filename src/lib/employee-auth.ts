@@ -2,7 +2,6 @@ import type { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 export const SCANNER_SESSION_COOKIE = "scanner_employee_session";
-const SCANNER_SESSION_MAX_AGE_SECONDS = 60 * 60 * 12;
 
 export type ScannerEmployeeSession = {
   employeeUserId: string;
@@ -55,7 +54,6 @@ export function setScannerSessionCookie(response: NextResponse, session: Scanner
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: SCANNER_SESSION_MAX_AGE_SECONDS,
   });
 }
 
