@@ -17,11 +17,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const role = session?.user.role ?? "ADMIN";
 
   return (
-    <div className="min-h-screen bg-transparent md:flex">
+    <div className="min-h-screen bg-transparent md:grid md:grid-cols-[auto_1fr]">
       <Sidebar dictionary={dictionary} role={role} />
-      <div className="flex min-h-screen flex-1 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-col">
         <Header locale={locale} dictionary={dictionary} role={role} showLogout={!AUTH_BYPASS} />
-        <main className="flex-1 p-3 sm:p-4 md:p-6">{children}</main>
+        <main className="flex-1 px-4 py-4 sm:px-5 md:px-6 md:py-6 lg:px-8">
+          <div className="mx-auto w-full max-w-[1500px]">{children}</div>
+        </main>
       </div>
     </div>
   );
