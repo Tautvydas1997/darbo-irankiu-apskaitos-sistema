@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getAuthSession } from "@/lib/auth";
+import { getNextInventoryNumber } from "@/lib/inventory-number";
 import { getLocaleFromCookie } from "@/lib/i18n";
 import { pickLocaleText } from "@/lib/i18n/localize";
 import { hasAdminAccess } from "@/lib/permissions";
@@ -14,9 +15,10 @@ export default async function NewToolPage() {
     redirect("/tools");
   }
 
-  const [categories, projects] = await Promise.all([
+  const [categories, projects, nextInventoryNumber] = await Promise.all([
     prisma.category.findMany({ orderBy: { name: "asc" } }),
     prisma.project.findMany({ orderBy: { code: "asc" } }),
+    getNextInventoryNumber(prisma),
   ]);
 
   return (
@@ -31,6 +33,14 @@ export default async function NewToolPage() {
         locale={locale}
         categories={categories.map((item) => ({ id: item.id, label: item.name }))}
         projects={projects.map((item) => ({ id: item.id, label: `${item.code} - ${item.name}` }))}
+        initialValues={{
+          name: "",
+          inventoryNumber: nextInventoryNumber,
+          status: "IN_STORAGE",
+          categoryId: "",
+          projectId: "",
+          conditionNotes: "",
+        }}
       />
     </section>
   );

@@ -129,8 +129,14 @@ export function ToolForm({ mode, locale, toolId, categories, projects, initialVa
                 id="inventoryNumber"
                 value={values.inventoryNumber}
                 onChange={(event) => updateValue("inventoryNumber", event.target.value)}
-                required
+                required={mode === "edit"}
+                readOnly={mode === "create"}
               />
+              {mode === "create" ? (
+                <p className="text-xs text-slate-500">
+                  {pickLocaleText(locale, "Numeris sugeneruojamas automatiškai.", "Number is generated automatically.")}
+                </p>
+              ) : null}
               {fieldErrors.inventoryNumber?.[0] ? (
                 <p className="text-sm text-rose-600">{fieldErrors.inventoryNumber[0]}</p>
               ) : null}
