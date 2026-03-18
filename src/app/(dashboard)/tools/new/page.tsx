@@ -22,8 +22,8 @@ export default async function NewToolPage() {
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">{pickLocaleText(locale, "Naujas irankis", "New tool")}</h2>
-        <p className="page-subtitle">{pickLocaleText(locale, "Uzregistruokite iranki ir priskirkite ji kategorijai bei projektui.", "Register a tool and assign it to category/project.")}</p>
+        <h2 className="page-title">{pickLocaleText(locale, "Naujas įrankis", "New tool")}</h2>
+        <p className="page-subtitle">{pickLocaleText(locale, "Užregistruokite įrankį ir priskirkite jį kategorijai bei projektui.", "Register a tool and assign it to category/project.")}</p>
       </div>
 
       <ToolForm

@@ -30,8 +30,8 @@ export default async function EditUserPage({ params }: EditUserPageProps) {
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">{pickLocaleText(locale, "Redaguoti darbuotoja", "Edit employee")}</h2>
-        <p className="page-subtitle">{pickLocaleText(locale, "Atnaujinkite darbuotojo duomenis ir prieiga prie skaitytuvo.", "Update employee details and scanner access.")}</p>
+        <h2 className="page-title">{pickLocaleText(locale, "Redaguoti darbuotoją", "Edit employee")}</h2>
+        <p className="page-subtitle">{pickLocaleText(locale, "Atnaujinkite darbuotojo duomenis ir prieigą prie skaitytuvo.", "Update employee details and scanner access.")}</p>
       </div>
       <UserForm
         mode="edit"

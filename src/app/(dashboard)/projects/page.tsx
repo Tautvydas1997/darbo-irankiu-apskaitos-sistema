@@ -24,12 +24,12 @@ export default async function ProjectsPage() {
         <div>
           <h2 className="page-title">{dictionary.common.projects}</h2>
           <p className="page-subtitle">
-            {pickLocaleText(locale, "Tvarkykite projektu sarasa, naudojama irankiu priskyrimui ir istorijai.", "Manage project records used in tool assignment and transaction history.")}
+            {pickLocaleText(locale, "Tvarkykite projektų sąrašą, naudojamą įrankių priskyrimui ir istorijai.", "Manage project records used in tool assignment and transaction history.")}
           </p>
         </div>
         {canManage ? (
           <Button asChild>
-            <Link href="/projects/new">{pickLocaleText(locale, "Kurti projekta", "Create project")}</Link>
+            <Link href="/projects/new">{pickLocaleText(locale, "Kurti projektą", "Create project")}</Link>
           </Button>
         ) : null}
       </div>
@@ -41,7 +41,7 @@ export default async function ProjectsPage() {
         </CardHeader>
         <CardContent>
           {projects.length === 0 ? (
-            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Projektu dar nera.", "No projects yet.")}</p>
+            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Projektų dar nėra.", "No projects yet.")}</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
@@ -72,7 +72,7 @@ export default async function ProjectsPage() {
                             <DeleteProjectButton projectId={project.id} locale={locale} />
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400">{pickLocaleText(locale, "Tik perziura", "View only")}</span>
+                          <span className="text-xs text-slate-400">{pickLocaleText(locale, "Tik peržiūra", "View only")}</span>
                         )}
                       </td>
                     </tr>

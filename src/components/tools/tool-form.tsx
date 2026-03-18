@@ -91,7 +91,7 @@ export function ToolForm({ mode, locale, toolId, categories, projects, initialVa
       if (result?.fieldErrors) {
         setFieldErrors(result.fieldErrors);
       }
-      setSubmitError(result?.message ?? pickLocaleText(locale, "Nepavyko issaugoti irankio.", "Failed to save tool."));
+      setSubmitError(result?.message ?? pickLocaleText(locale, "Nepavyko išsaugoti įrankio.", "Failed to save tool."));
       setIsSaving(false);
       return;
     }
@@ -103,11 +103,11 @@ export function ToolForm({ mode, locale, toolId, categories, projects, initialVa
   return (
     <Card className="max-w-3xl">
       <CardHeader>
-        <CardTitle>{mode === "create" ? pickLocaleText(locale, "Kurti iranki", "Create tool") : pickLocaleText(locale, "Redaguoti iranki", "Edit tool")}</CardTitle>
+        <CardTitle>{mode === "create" ? pickLocaleText(locale, "Pridėti įrankį", "Add tool") : pickLocaleText(locale, "Redaguoti įrankį", "Edit tool")}</CardTitle>
         <CardDescription>
           {mode === "create"
-            ? pickLocaleText(locale, "Uzregistruokite nauja iranki apskaitos sistemoje.", "Register a new tool in inventory.")
-            : pickLocaleText(locale, "Atnaujinkite irankio duomenis, priskyrima ir statusa.", "Update tool data, assignment, and status.")}
+            ? pickLocaleText(locale, "Užregistruokite naują įrankį apskaitos sistemoje.", "Register a new tool in inventory.")
+            : pickLocaleText(locale, "Atnaujinkite įrankio duomenis, priskyrimą ir statusą.", "Update tool data, assignment, and status.")}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -198,14 +198,14 @@ export function ToolForm({ mode, locale, toolId, categories, projects, initialVa
 
           <div className="form-field">
             <label htmlFor="conditionNotes" className="field-label">
-              {pickLocaleText(locale, "Bukles pastabos", "Condition Notes")}
+              {pickLocaleText(locale, "Būklės pastabos", "Condition Notes")}
             </label>
             <textarea
               id="conditionNotes"
               className="app-textarea"
               value={values.conditionNotes}
               onChange={(event) => updateValue("conditionNotes", event.target.value)}
-              placeholder={pickLocaleText(locale, "Papildomos pastabos apie esama irankio bukle", "Optional notes about current tool condition")}
+              placeholder={pickLocaleText(locale, "Papildomos pastabos apie esamą įrankio būklę", "Optional notes about current tool condition")}
             />
             {fieldErrors.conditionNotes?.[0] ? (
               <p className="text-sm text-rose-600">{fieldErrors.conditionNotes[0]}</p>
@@ -219,11 +219,11 @@ export function ToolForm({ mode, locale, toolId, categories, projects, initialVa
               {isSaving
                 ? pickLocaleText(locale, "Saugoma...", "Saving...")
                 : mode === "create"
-                  ? pickLocaleText(locale, "Kurti iranki", "Create tool")
-                  : pickLocaleText(locale, "Issaugoti pakeitimus", "Save changes")}
+                  ? pickLocaleText(locale, "Pridėti įrankį", "Add tool")
+                  : pickLocaleText(locale, "Išsaugoti pakeitimus", "Save changes")}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/tools")}>
-              {pickLocaleText(locale, "Atsaukti", "Cancel")}
+              {pickLocaleText(locale, "Atšaukti", "Cancel")}
             </Button>
           </div>
         </form>

@@ -33,8 +33,8 @@ export default async function EditToolPage({ params }: EditToolPageProps) {
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">{pickLocaleText(locale, "Redaguoti iranki", "Edit tool")}</h2>
-        <p className="page-subtitle">{pickLocaleText(locale, "Atnaujinkite priskyrimus, statusa ir bukles pastabas.", "Update assignments, status, and condition notes.")}</p>
+        <h2 className="page-title">{pickLocaleText(locale, "Redaguoti įrankį", "Edit tool")}</h2>
+        <p className="page-subtitle">{pickLocaleText(locale, "Atnaujinkite priskyrimus, statusą ir būklės pastabas.", "Update assignments, status, and condition notes.")}</p>
       </div>
 
       <ToolForm

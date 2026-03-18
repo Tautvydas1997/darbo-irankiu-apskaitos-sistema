@@ -29,16 +29,16 @@ export default async function ToolsPage() {
         <div>
           <h2 className="page-title">{dictionary.common.tools}</h2>
           <p className="page-subtitle">
-            {pickLocaleText(locale, "Stebekite ir valdykite irankius su projekto ir kategorijos priskyrimu.", "Track and manage all inventory tools with project/category assignment.")}
+            {pickLocaleText(locale, "Stebėkite ir valdykite įrankius su projekto ir kategorijos priskyrimu.", "Track and manage all inventory tools with project/category assignment.")}
           </p>
         </div>
         {canManage ? (
           <div className="flex items-center gap-2">
             <Button asChild variant="outline">
-              <Link href="/tools/qr-print">{pickLocaleText(locale, "QR spauda", "QR Print")}</Link>
+              <Link href="/tools/qr-print">{pickLocaleText(locale, "QR kodai", "QR codes")}</Link>
             </Button>
             <Button asChild>
-              <Link href="/tools/new">{pickLocaleText(locale, "Kurti iranki", "Create tool")}</Link>
+              <Link href="/tools/new">{pickLocaleText(locale, "Pridėti įrankį", "Add tool")}</Link>
             </Button>
           </div>
         ) : null}
@@ -46,18 +46,18 @@ export default async function ToolsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>{pickLocaleText(locale, "Irankiai", "Tools")}</CardTitle>
-          <CardDescription>{pickLocaleText(locale, "Registruoti irankiai ir ju esamas statusas.", "Registered tools and current assignment/status overview.")}</CardDescription>
+          <CardTitle>{pickLocaleText(locale, "Įrankiai", "Tools")}</CardTitle>
+          <CardDescription>{pickLocaleText(locale, "Registruoti įrankiai ir jų esamas statusas.", "Registered tools and current assignment/status overview.")}</CardDescription>
         </CardHeader>
         <CardContent>
           {tools.length === 0 ? (
-            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Irankiu dar nera.", "No tools yet.")}</p>
+            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Įrankių dar nėra.", "No tools yet.")}</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
                 <thead>
                   <tr>
-                    <th>{pickLocaleText(locale, "Irankio pavadinimas", "Tool Name")}</th>
+                    <th>{pickLocaleText(locale, "Įrankio pavadinimas", "Tool Name")}</th>
                     <th>{pickLocaleText(locale, "Inventoriaus numeris", "Inventory Number")}</th>
                     <th>{pickLocaleText(locale, "Kategorija", "Category")}</th>
                     <th>{pickLocaleText(locale, "Projektas", "Project")}</th>
@@ -90,7 +90,7 @@ export default async function ToolsPage() {
                             <DeleteToolButton toolId={tool.id} locale={locale} />
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400">{pickLocaleText(locale, "Tik perziura", "View only")}</span>
+                          <span className="text-xs text-slate-400">{pickLocaleText(locale, "Tik peržiūra", "View only")}</span>
                         )}
                       </td>
                     </tr>

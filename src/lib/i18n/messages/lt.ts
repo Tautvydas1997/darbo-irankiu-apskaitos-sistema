@@ -1,10 +1,10 @@
 export const lt = {
   app: {
-    title: "Darbo irankiu apskaitos sistema",
+    title: "Darbo įrankių apskaitos sistema",
   },
   common: {
     dashboard: "Skydelis",
-    tools: "Irankiai",
+    tools: "Įrankiai",
     projects: "Projektai",
     employees: "Darbuotojai",
     history: "Istorija",

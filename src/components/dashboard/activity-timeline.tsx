@@ -29,7 +29,7 @@ export function ActivityTimeline({ items, locale }: ActivityTimelineProps) {
     <Card>
       <CardHeader>
         <CardTitle className="text-base font-semibold text-slate-900">{pickLocaleText(locale, "Naujausiu veiksmu juosta", "Recent activity timeline")}</CardTitle>
-        <CardDescription>{pickLocaleText(locale, "Naujausi irankiu judejimo ir statuso pokyciu ivykiai.", "Latest tool movement and status events.")}</CardDescription>
+        <CardDescription>{pickLocaleText(locale, "Naujausi įrankių judėjimo ir statuso pokyčių įvykiai.", "Latest tool movement and status events.")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {items.map((item, index) => {

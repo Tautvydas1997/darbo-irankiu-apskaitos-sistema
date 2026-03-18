@@ -35,11 +35,11 @@ export default async function DashboardPage() {
   ]);
 
   const stats = [
-    { title: pickLocaleText(locale, "Visi irankiai", "Total tools"), value: totalTools, trend: pickLocaleText(locale, "Bendras kiekis", "Inventory scope"), tone: "slate" as const },
-    { title: pickLocaleText(locale, "Irankiai sandelyje", "Tools in storage"), value: inStorage, trend: pickLocaleText(locale, "Paruosta isdavimui", "Ready for issue"), tone: "emerald" as const },
-    { title: pickLocaleText(locale, "Paimti irankiai", "Checked out tools"), value: checkedOut, trend: pickLocaleText(locale, "Siuo metu naudojami", "Currently in use"), tone: "amber" as const },
-    { title: pickLocaleText(locale, "Sugede irankiai", "Broken tools"), value: broken, trend: pickLocaleText(locale, "Reikia patikros", "Need inspection"), tone: "rose" as const },
-    { title: pickLocaleText(locale, "Prarasti irankiai", "Lost tools"), value: lost, trend: pickLocaleText(locale, "Kritinis stebejimas", "Critical control"), tone: "rose" as const },
+    { title: pickLocaleText(locale, "Visi įrankiai", "Total tools"), value: totalTools, trend: pickLocaleText(locale, "Bendras kiekis", "Inventory scope"), tone: "slate" as const },
+    { title: pickLocaleText(locale, "Įrankiai sandėlyje", "Tools in storage"), value: inStorage, trend: pickLocaleText(locale, "Paruošta išdavimui", "Ready for issue"), tone: "emerald" as const },
+    { title: pickLocaleText(locale, "Paimti įrankiai", "Checked out tools"), value: checkedOut, trend: pickLocaleText(locale, "Šiuo metu naudojami", "Currently in use"), tone: "amber" as const },
+    { title: pickLocaleText(locale, "Sugedę įrankiai", "Broken tools"), value: broken, trend: pickLocaleText(locale, "Reikia patikros", "Need inspection"), tone: "rose" as const },
+    { title: pickLocaleText(locale, "Prarasti įrankiai", "Lost tools"), value: lost, trend: pickLocaleText(locale, "Kritinis stebėjimas", "Critical control"), tone: "rose" as const },
   ];
 
   const toolsPerProject = projects.map((project) => ({
@@ -72,7 +72,7 @@ export default async function DashboardPage() {
       <div className="page-header">
         <h2 className="page-title">{dictionary.common.dashboard}</h2>
         <p className="page-subtitle">
-          {pickLocaleText(locale, "Realus irankiu bukles, paskirstymo projektams ir veiksmu suvestines vaizdas.", "Real-time overview of inventory status, project allocation, and operational activity.")}
+          {pickLocaleText(locale, "Realus įrankių būklės, paskirstymo projektams ir veiksmų suvestinės vaizdas.", "Real-time overview of inventory status, project allocation, and operational activity.")}
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export default async function DashboardPage() {
           <CardHeader>
             <CardTitle className="text-base font-semibold">{pickLocaleText(locale, "Operacine suvestine", "Operational summary")}</CardTitle>
             <CardDescription className="text-slate-200">
-              {pickLocaleText(locale, "Esamos sistemos bukles santrauka administravimui.", "Current system health snapshot for management review.")}
+              {pickLocaleText(locale, "Esamos sistemos būklės santrauka administravimui.", "Current system health snapshot for management review.")}
             </CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">

@@ -25,7 +25,7 @@ export default async function NewProjectPage({ searchParams }: NewProjectPagePro
     <section className="page-shell">
       <div className="page-header">
         <h2 className="page-title">{pickLocaleText(locale, "Naujas projektas", "New project")}</h2>
-        <p className="page-subtitle">{pickLocaleText(locale, "Pridekite projekta irankiu paskirstymui ir stebejimui.", "Add a project for tool allocation and tracking.")}</p>
+        <p className="page-subtitle">{pickLocaleText(locale, "Pridėkite projektą įrankių paskirstymui ir stebėjimui.", "Add a project for tool allocation and tracking.")}</p>
       </div>
       <ProjectForm
         mode="create"

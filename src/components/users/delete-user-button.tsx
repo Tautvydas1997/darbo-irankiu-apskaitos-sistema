@@ -15,7 +15,7 @@ export function DeleteUserButton({ userId, locale }: DeleteUserButtonProps) {
 
   const handleDelete = async () => {
     const confirmed = window.confirm(
-      pickLocaleText(locale, "Ar tikrai norite istrinti si darbuotoja?", "Delete this employee?")
+      pickLocaleText(locale, "Ar tikrai norite ištrinti šį darbuotoją?", "Delete this employee?")
     );
     if (!confirmed) {
       return;
@@ -25,7 +25,7 @@ export function DeleteUserButton({ userId, locale }: DeleteUserButtonProps) {
       method: "DELETE",
     });
     if (!response.ok) {
-      window.alert(pickLocaleText(locale, "Nepavyko istrinti darbuotojo.", "Failed to delete employee."));
+      window.alert(pickLocaleText(locale, "Nepavyko ištrinti darbuotojo.", "Failed to delete employee."));
       return;
     }
 
@@ -34,7 +34,7 @@ export function DeleteUserButton({ userId, locale }: DeleteUserButtonProps) {
 
   return (
     <Button type="button" size="sm" variant="outline" onClick={handleDelete}>
-      {pickLocaleText(locale, "Istrinti", "Delete")}
+      {pickLocaleText(locale, "Ištrinti", "Delete")}
     </Button>
   );
 }

@@ -112,7 +112,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
       <div>
         <h2 className="page-title">{dictionary.common.history}</h2>
         <p className="page-subtitle">
-          {pickLocaleText(locale, "Perziurekite visus irankiu veiksmus su issamiais filtrais.", "Review all tool transactions with advanced filters.")}
+          {pickLocaleText(locale, "Peržiūrėkite visus įrankių veiksmus su išsamiais filtrais.", "Review all tool transactions with advanced filters.")}
         </p>
       </div>
 
@@ -120,7 +120,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
         <CardHeader>
           <CardTitle>{pickLocaleText(locale, "Filtrai", "Filters")}</CardTitle>
           <CardDescription>
-            {pickLocaleText(locale, "Filtruokite istorija pagal iranki, darbuotoja, projekta, veiksma ir data.", "Filter history by tool, employee, project code, action type, and date range.")}
+            {pickLocaleText(locale, "Filtruokite istoriją pagal įrankį, darbuotoją, projektą, veiksmą ir datą.", "Filter history by tool, employee, project code, action type, and date range.")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -130,7 +130,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
               defaultValue={filters.toolId}
               className="app-select"
             >
-              <option value="">{pickLocaleText(locale, "Visi irankiai", "All tools")}</option>
+              <option value="">{pickLocaleText(locale, "Visi įrankiai", "All tools")}</option>
               {tools.map((tool) => (
                 <option key={tool.id} value={tool.id}>
                   {tool.name} ({tool.inventoryNumber})
@@ -143,7 +143,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
               name="employee"
               defaultValue={filters.employee}
               className="app-select"
-              placeholder={pickLocaleText(locale, "Darbuotojo vardas arba pavarde", "Employee first or last name")}
+              placeholder={pickLocaleText(locale, "Darbuotojo vardas arba pavardė", "Employee first or last name")}
             />
 
             <input
@@ -155,7 +155,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
             />
 
             <select name="actionType" defaultValue={filters.actionType} className="app-select">
-              <option value="">{pickLocaleText(locale, "Visi veiksmu tipai", "All action types")}</option>
+              <option value="">{pickLocaleText(locale, "Visi veiksmų tipai", "All action types")}</option>
               {Object.values(ActionType).map((actionType) => (
                 <option key={actionType} value={actionType}>
                   {formatEnumLabel(actionType)}
@@ -185,7 +185,7 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
                 defaultChecked={filters.unknownOnly}
                 className="h-4 w-4 rounded border-slate-300"
               />
-              {pickLocaleText(locale, "Rodyti tik neegzistuojanciu projektu kodus", "Only unknown project codes")}
+              {pickLocaleText(locale, "Rodyti tik neegzistuojančių projektų kodus", "Only unknown project codes")}
             </label>
 
             <div className="flex items-center gap-2 md:col-span-2 xl:col-span-5">
@@ -200,18 +200,18 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>{pickLocaleText(locale, "Irankiu istorija", "Transactions")}</CardTitle>
-          <CardDescription>{pickLocaleText(locale, "Visi su irankiais atlikti veiksmai.", "All actions performed on tools.")}</CardDescription>
+          <CardTitle>{pickLocaleText(locale, "Įrankių istorija", "Transactions")}</CardTitle>
+          <CardDescription>{pickLocaleText(locale, "Visi su įrankiais atlikti veiksmai.", "All actions performed on tools.")}</CardDescription>
         </CardHeader>
         <CardContent>
           {transactions.length === 0 ? (
-            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Pagal pasirinktus filtrus irasu nerasta.", "No transactions found for selected filters.")}</p>
+            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Pagal pasirinktus filtrus įrašų nerasta.", "No transactions found for selected filters.")}</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
                 <thead>
                   <tr>
-                    <th>{pickLocaleText(locale, "Irankis", "Tool")}</th>
+                    <th>{pickLocaleText(locale, "Įrankis", "Tool")}</th>
                     <th>{pickLocaleText(locale, "Veiksmas", "Action")}</th>
                     <th>{pickLocaleText(locale, "Darbuotojas", "Employee")}</th>
                     <th>{pickLocaleText(locale, "Projektas", "Project")}</th>
@@ -233,10 +233,10 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
                         ) : (
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
-                              {pickLocaleText(locale, `${item.projectCode} (projekto nera sarase)`, `${item.projectCode} (not in projects)`)}
+                              {pickLocaleText(locale, `${item.projectCode} (projekto nėra sąraše)`, `${item.projectCode} (not in projects)`)}
                             </span>
                             <Button asChild size="sm" variant="outline">
-                              <Link href={`/projects/new?code=${encodeURIComponent(item.projectCode)}`}>{pickLocaleText(locale, "Prideti projekta", "Add project")}</Link>
+                              <Link href={`/projects/new?code=${encodeURIComponent(item.projectCode)}`}>{pickLocaleText(locale, "Pridėti projektą", "Add project")}</Link>
                             </Button>
                           </div>
                         )}

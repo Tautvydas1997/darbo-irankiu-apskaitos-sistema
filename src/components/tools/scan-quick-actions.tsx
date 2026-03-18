@@ -54,20 +54,20 @@ export function ScanQuickActions({ toolId, locale, toolStatus, scannerEmployee }
     if (action === "CHECK_OUT") {
       return pickLocaleText(
         locale,
-        "Irankis jau paimtas arba nepasiekiamas. Pirma grazinkite ji i sandeli.",
+        "Įrankis jau paimtas arba nepasiekiamas. Pirma grąžinkite jį į sandėlį.",
         "Tool is already taken or unavailable. Return it to warehouse first."
       );
     }
     if (action === "RETURN") {
       return pickLocaleText(
         locale,
-        "Grazinti galima tik paimta arba pazymeta sugedusia iranki.",
+        "Grąžinti galima tik paimtą arba pažymėtą sugedusį įrankį.",
         "Only checked out or broken tools can be returned."
       );
     }
     return pickLocaleText(
       locale,
-      "Gedima galima pranesti tik kai irankis yra paimtas.",
+      "Gedimą galima pranešti tik kai įrankis yra paimtas.",
       "You can report broken only when the tool is checked out."
     );
   };
@@ -120,10 +120,10 @@ export function ScanQuickActions({ toolId, locale, toolStatus, scannerEmployee }
 
   const itemLabel = (action: QuickAction) =>
     action === "CHECK_OUT"
-      ? pickLocaleText(locale, "Paimti iranki", "Take tool")
+      ? pickLocaleText(locale, "Paimti įrankį", "Take tool")
       : action === "RETURN"
-        ? pickLocaleText(locale, "Grazinti iranki", "Return tool")
-        : pickLocaleText(locale, "Pranesti apie gedima", "Report broken");
+        ? pickLocaleText(locale, "Grąžinti įrankį", "Return tool")
+        : pickLocaleText(locale, "Pranešti apie gedimą", "Report broken");
 
   return (
     <Card>
@@ -134,7 +134,7 @@ export function ScanQuickActions({ toolId, locale, toolStatus, scannerEmployee }
       <CardContent className="space-y-3">
         {scannerEmployee ? (
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
-            <p className="text-xs uppercase tracking-wide text-slate-500">{pickLocaleText(locale, "Prisijunges darbuotojas", "Signed-in employee")}</p>
+            <p className="text-xs uppercase tracking-wide text-slate-500">{pickLocaleText(locale, "Prisijungęs darbuotojas", "Signed-in employee")}</p>
             <p className="text-sm font-medium text-slate-900">
               {scannerEmployee.firstName} {scannerEmployee.lastName}
             </p>
@@ -163,7 +163,7 @@ export function ScanQuickActions({ toolId, locale, toolStatus, scannerEmployee }
               <Button asChild type="button" variant="outline">
                 <Link href="/scan">
                   <ScanLine className="mr-2 h-4 w-4" />
-                  {pickLocaleText(locale, "Skenuoti kita QR", "Scan another QR")}
+                  {pickLocaleText(locale, "Skenuoti kitą QR", "Scan another QR")}
                 </Link>
               </Button>
             </div>
@@ -226,7 +226,7 @@ export function ScanQuickActions({ toolId, locale, toolStatus, scannerEmployee }
           <Button asChild className="h-12 text-base">
             <Link href="/scan">
               <ScanLine className="mr-2 h-4 w-4" />
-              {pickLocaleText(locale, "Skenuoti kita iranki", "Scan next tool")}
+              {pickLocaleText(locale, "Skenuoti kitą įrankį", "Scan next tool")}
             </Link>
           </Button>
         </div>

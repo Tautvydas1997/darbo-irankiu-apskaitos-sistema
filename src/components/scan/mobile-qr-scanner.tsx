@@ -123,7 +123,7 @@ export function MobileQrScanner({ locale }: MobileQrScannerProps) {
     }
 
     setScanError(null);
-    setStatusMessage(pickLocaleText(locale, "Nukreipkite kamera i irankio QR koda.", "Point the camera at a tool QR code."));
+    setStatusMessage(pickLocaleText(locale, "Nukreipkite kamerą į įrankio QR kodą.", "Point the camera at a tool QR code."));
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -174,7 +174,7 @@ export function MobileQrScanner({ locale }: MobileQrScannerProps) {
           {pickLocaleText(locale, "QR skaitytuvas", "QR Scanner")}
         </h1>
         <p className="mt-1 text-sm text-slate-600">
-          {pickLocaleText(locale, "Greitas skenavimas irankio atpazinimui ir veiksmams objekte.", "Fast mobile scanning for tool identification and next actions.")}
+          {pickLocaleText(locale, "Greitas skenavimas įrankio atpažinimui ir veiksmams objekte.", "Fast mobile scanning for tool identification and next actions.")}
         </p>
       </div>
 

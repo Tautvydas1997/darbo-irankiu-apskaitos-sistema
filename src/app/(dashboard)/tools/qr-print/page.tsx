@@ -1,11 +1,9 @@
 import { redirect } from "next/navigation";
-import QRCode from "qrcode";
 import { getAuthSession } from "@/lib/auth";
 import { getLocaleFromCookie } from "@/lib/i18n";
 import { hasAdminAccess } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { QrPrintBoard } from "@/components/tools/qr-print-board";
-import { getToolQrPayload } from "@/lib/tool-qr";
 
 export default async function ToolQrPrintPage() {
   const locale = getLocaleFromCookie();
@@ -24,19 +22,5 @@ export default async function ToolQrPrintPage() {
     },
   });
 
-  const printableTools = await Promise.all(
-    tools.map(async (tool) => {
-      const qrDataUrl = await QRCode.toDataURL(getToolQrPayload(tool.id), {
-        margin: 1,
-        width: 200,
-      });
-
-      return {
-        ...tool,
-        qrDataUrl,
-      };
-    })
-  );
-
-  return <QrPrintBoard tools={printableTools} locale={locale} />;
+  return <QrPrintBoard tools={tools} locale={locale} />;
 }

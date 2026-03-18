@@ -14,7 +14,7 @@ export function DeleteProjectButton({ projectId, locale }: DeleteProjectButtonPr
   const router = useRouter();
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(pickLocaleText(locale, "Ar tikrai norite istrinti si projekta?", "Delete this project?"));
+    const confirmed = window.confirm(pickLocaleText(locale, "Ar tikrai norite ištrinti šį projektą?", "Delete this project?"));
     if (!confirmed) {
       return;
     }
@@ -24,7 +24,7 @@ export function DeleteProjectButton({ projectId, locale }: DeleteProjectButtonPr
     });
 
     if (!response.ok) {
-      window.alert(pickLocaleText(locale, "Nepavyko istrinti projekto.", "Failed to delete project."));
+      window.alert(pickLocaleText(locale, "Nepavyko ištrinti projekto.", "Failed to delete project."));
       return;
     }
 
@@ -33,7 +33,7 @@ export function DeleteProjectButton({ projectId, locale }: DeleteProjectButtonPr
 
   return (
     <Button type="button" size="sm" variant="outline" onClick={handleDelete}>
-      {pickLocaleText(locale, "Istrinti", "Delete")}
+      {pickLocaleText(locale, "Ištrinti", "Delete")}
     </Button>
   );
 }

@@ -72,7 +72,7 @@ export function UserForm({ mode, locale, userId, initialValues }: UserFormProps)
       if (result?.fieldErrors) {
         setFieldErrors(result.fieldErrors);
       }
-      setSubmitError(result?.message ?? pickLocaleText(locale, "Nepavyko issaugoti darbuotojo.", "Failed to save employee."));
+      setSubmitError(result?.message ?? pickLocaleText(locale, "Nepavyko išsaugoti darbuotojo.", "Failed to save employee."));
       setIsSaving(false);
       return;
     }
@@ -84,7 +84,7 @@ export function UserForm({ mode, locale, userId, initialValues }: UserFormProps)
   return (
     <Card className="max-w-2xl">
       <CardHeader>
-        <CardTitle>{mode === "create" ? pickLocaleText(locale, "Kurti darbuotoja", "Create employee") : pickLocaleText(locale, "Redaguoti darbuotoja", "Edit employee")}</CardTitle>
+        <CardTitle>{mode === "create" ? pickLocaleText(locale, "Kurti darbuotoją", "Create employee") : pickLocaleText(locale, "Redaguoti darbuotoją", "Edit employee")}</CardTitle>
         <CardDescription>
           {mode === "create"
             ? pickLocaleText(locale, "Sukurkite darbuotojo paskyra su unikaliu ID skeneriui.", "Create an employee account with unique scanner ID.")
@@ -157,11 +157,11 @@ export function UserForm({ mode, locale, userId, initialValues }: UserFormProps)
               {isSaving
                 ? pickLocaleText(locale, "Saugoma...", "Saving...")
                 : mode === "create"
-                  ? pickLocaleText(locale, "Kurti darbuotoja", "Create employee")
-                  : pickLocaleText(locale, "Issaugoti pakeitimus", "Save changes")}
+                  ? pickLocaleText(locale, "Kurti darbuotoją", "Create employee")
+                  : pickLocaleText(locale, "Išsaugoti pakeitimus", "Save changes")}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/users")}>
-              {pickLocaleText(locale, "Atsaukti", "Cancel")}
+              {pickLocaleText(locale, "Atšaukti", "Cancel")}
             </Button>
           </div>
         </form>

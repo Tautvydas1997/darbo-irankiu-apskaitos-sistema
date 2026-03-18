@@ -26,14 +26,14 @@ export default async function UsersPage() {
           <p className="page-subtitle">
             {pickLocaleText(
               locale,
-              "Tvarkykite darbuotoju paskyras ir unikalius ID skaitytuvo prisijungimui.",
+              "Tvarkykite darbuotojų paskyras ir unikalius ID skaitytuvo prisijungimui.",
               "Manage employee accounts and unique IDs for scanner access."
             )}
           </p>
         </div>
         {canManage ? (
           <Button asChild>
-            <Link href="/users/new">{pickLocaleText(locale, "Kurti darbuotoja", "Create employee")}</Link>
+            <Link href="/users/new">{pickLocaleText(locale, "Kurti darbuotoją", "Create employee")}</Link>
           </Button>
         ) : null}
       </div>
@@ -41,11 +41,11 @@ export default async function UsersPage() {
       <Card>
         <CardHeader>
           <CardTitle>{pickLocaleText(locale, "Darbuotojai", "Employees")}</CardTitle>
-          <CardDescription>{pickLocaleText(locale, "Visos darbuotoju paskyros skenerio autentifikacijai.", "All employee accounts used for scanner authentication.")}</CardDescription>
+          <CardDescription>{pickLocaleText(locale, "Visos darbuotojų paskyros skenerio autentifikacijai.", "All employee accounts used for scanner authentication.")}</CardDescription>
         </CardHeader>
         <CardContent>
           {users.length === 0 ? (
-            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Darbuotoju dar nera.", "No employees yet.")}</p>
+            <p className="text-sm text-slate-600">{pickLocaleText(locale, "Darbuotojų dar nėra.", "No employees yet.")}</p>
           ) : (
             <div className="table-shell">
               <table className="app-table">
@@ -53,8 +53,8 @@ export default async function UsersPage() {
                   <tr>
                     <th>{pickLocaleText(locale, "Darbuotojo ID", "Employee ID")}</th>
                     <th>{pickLocaleText(locale, "Vardas", "First name")}</th>
-                    <th>{pickLocaleText(locale, "Pavarde", "Last name")}</th>
-                    <th>{pickLocaleText(locale, "Busena", "Status")}</th>
+                    <th>{pickLocaleText(locale, "Pavardė", "Last name")}</th>
+                    <th>{pickLocaleText(locale, "Būsena", "Status")}</th>
                     <th>{pickLocaleText(locale, "Sukurta", "Created")}</th>
                     <th>{pickLocaleText(locale, "Veiksmai", "Actions")}</th>
                   </tr>
@@ -86,7 +86,7 @@ export default async function UsersPage() {
                             <DeleteUserButton userId={user.id} locale={locale} />
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400">{pickLocaleText(locale, "Tik perziura", "View only")}</span>
+                          <span className="text-xs text-slate-400">{pickLocaleText(locale, "Tik peržiūra", "View only")}</span>
                         )}
                       </td>
                     </tr>

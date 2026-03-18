@@ -65,7 +65,7 @@ export function ProjectForm({ mode, locale, projectId, initialValues }: ProjectF
       if (result?.fieldErrors) {
         setFieldErrors(result.fieldErrors);
       }
-      setSubmitError(result?.message ?? pickLocaleText(locale, "Nepavyko issaugoti projekto.", "Failed to save project."));
+      setSubmitError(result?.message ?? pickLocaleText(locale, "Nepavyko išsaugoti projekto.", "Failed to save project."));
       setIsSaving(false);
       return;
     }
@@ -77,11 +77,11 @@ export function ProjectForm({ mode, locale, projectId, initialValues }: ProjectF
   return (
     <Card className="max-w-2xl">
       <CardHeader>
-        <CardTitle>{mode === "create" ? pickLocaleText(locale, "Kurti projekta", "Create project") : pickLocaleText(locale, "Redaguoti projekta", "Edit project")}</CardTitle>
+        <CardTitle>{mode === "create" ? pickLocaleText(locale, "Kurti projektą", "Create project") : pickLocaleText(locale, "Redaguoti projektą", "Edit project")}</CardTitle>
         <CardDescription>
           {mode === "create"
-            ? pickLocaleText(locale, "Sukurkite nauja projekta ir priskirkite jam irankius.", "Create a new project and assign tools to it.")
-            : pickLocaleText(locale, "Atnaujinkite projekto duomenis, naudojamus irankiu apskaitoje.", "Update project details used by inventory operations.")}
+            ? pickLocaleText(locale, "Sukurkite naują projektą ir priskirkite jam įrankius.", "Create a new project and assign tools to it.")
+            : pickLocaleText(locale, "Atnaujinkite projekto duomenis, naudojamus įrankių apskaitoje.", "Update project details used by inventory operations.")}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -135,11 +135,11 @@ export function ProjectForm({ mode, locale, projectId, initialValues }: ProjectF
               {isSaving
                 ? pickLocaleText(locale, "Saugoma...", "Saving...")
                 : mode === "create"
-                  ? pickLocaleText(locale, "Kurti projekta", "Create project")
-                  : pickLocaleText(locale, "Issaugoti pakeitimus", "Save changes")}
+                  ? pickLocaleText(locale, "Kurti projektą", "Create project")
+                  : pickLocaleText(locale, "Išsaugoti pakeitimus", "Save changes")}
             </Button>
             <Button type="button" variant="outline" onClick={() => router.push("/projects")}>
-              {pickLocaleText(locale, "Atsaukti", "Cancel")}
+              {pickLocaleText(locale, "Atšaukti", "Cancel")}
             </Button>
           </div>
         </form>

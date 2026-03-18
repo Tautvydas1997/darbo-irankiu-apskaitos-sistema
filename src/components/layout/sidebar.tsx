@@ -20,7 +20,7 @@ const NAV: NavItem[] = [
   { href: "/projects", icon: FolderKanban, key: "projects" },
   { href: "/users", icon: Users, key: "employees" },
   { href: "/history", icon: History, key: "history" },
-  { href: "/tools/qr-print", icon: QrCode, key: "tools", label: "QR spauda" },
+  { href: "/tools/qr-print", icon: QrCode, key: "tools", label: "QR kodai" },
   { href: "/settings/profile", icon: Settings, key: "settings" },
 ];
 
@@ -30,8 +30,8 @@ export function Sidebar({ dictionary, role }: SidebarProps) {
   return (
     <aside className="hidden w-64 border-r border-slate-200 bg-white/95 backdrop-blur md:block">
       <div className="border-b border-slate-200 px-4 py-5">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Irankiu sistema</p>
-        <p className="mt-1 text-sm font-semibold text-slate-900">Administravimo pultas</p>
+        <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Įrankių sistema</p>
+        <p className="mt-1 text-sm font-semibold text-slate-900">Administratorius</p>
       </div>
       <nav className="space-y-1.5 p-3">
         {navItems.map((item) => {

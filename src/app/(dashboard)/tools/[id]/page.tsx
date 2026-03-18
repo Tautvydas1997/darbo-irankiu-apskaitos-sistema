@@ -48,10 +48,10 @@ export default async function ToolDetailsPage({ params }: ToolDetailsPageProps) 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="page-title">{tool.name}</h2>
-          <p className="page-subtitle">{pickLocaleText(locale, "Irankio detales ir QR kodas skenavimui.", "Tool details and QR code for scan-based access.")}</p>
+          <p className="page-subtitle">{pickLocaleText(locale, "Įrankio detalės ir QR kodas skenavimui.", "Tool details and QR code for scan-based access.")}</p>
         </div>
         <Button asChild variant="outline">
-          <Link href="/tools">{pickLocaleText(locale, "Atgal i irankius", "Back to tools")}</Link>
+          <Link href="/tools">{pickLocaleText(locale, "Atgal į įrankius", "Back to tools")}</Link>
         </Button>
       </div>
 
@@ -59,7 +59,7 @@ export default async function ToolDetailsPage({ params }: ToolDetailsPageProps) 
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>{pickLocaleText(locale, "Detales", "Details")}</CardTitle>
-            <CardDescription>{pickLocaleText(locale, "Pagrindine irankio informacija ir priskyrimo bukle.", "Core tool information and assignment status.")}</CardDescription>
+            <CardDescription>{pickLocaleText(locale, "Pagrindinė įrankio informacija ir priskyrimo būklė.", "Core tool information and assignment status.")}</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
@@ -81,8 +81,8 @@ export default async function ToolDetailsPage({ params }: ToolDetailsPageProps) 
               </p>
             </div>
             <div className="sm:col-span-2">
-              <p className="text-xs uppercase text-slate-500">{pickLocaleText(locale, "Bukles pastabos", "Condition Notes")}</p>
-              <p className="mt-1 text-slate-800">{tool.conditionNotes || pickLocaleText(locale, "Pastabu nera", "No notes")}</p>
+              <p className="text-xs uppercase text-slate-500">{pickLocaleText(locale, "Būklės pastabos", "Condition Notes")}</p>
+              <p className="mt-1 text-slate-800">{tool.conditionNotes || pickLocaleText(locale, "Pastabų nėra", "No notes")}</p>
             </div>
             <div className="sm:col-span-2">
               <p className="text-xs uppercase text-slate-500">QR Payload</p>
@@ -94,7 +94,7 @@ export default async function ToolDetailsPage({ params }: ToolDetailsPageProps) 
         <Card>
           <CardHeader>
             <CardTitle>QR Code</CardTitle>
-            <CardDescription>{pickLocaleText(locale, `Nuskenuokite, kad atidarytumete irankio irasa ${qrPath}`, `Scan to open tool record at ${qrPath}`)}</CardDescription>
+            <CardDescription>{pickLocaleText(locale, `Nuskenuokite, kad atidarytumėte įrankio įrašą ${qrPath}`, `Scan to open tool record at ${qrPath}`)}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}

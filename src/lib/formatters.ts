@@ -2,7 +2,7 @@ export function formatEnumLabel(value: string): string {
   const ltMap: Record<string, string> = {
     IN_STORAGE: "Sandelyje",
     CHECKED_OUT: "Paimtas",
-    BROKEN: "Sugedes",
+    BROKEN: "Sugedęs",
     LOST: "Prarastas",
     IN_REPAIR: "Taisomas",
     CHECK_OUT: "Paimti",

@@ -30,8 +30,8 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
   return (
     <section className="page-shell">
       <div className="page-header">
-        <h2 className="page-title">{pickLocaleText(locale, "Redaguoti projekta", "Edit project")}</h2>
-        <p className="page-subtitle">{pickLocaleText(locale, "Atnaujinkite projekto duomenis, naudojamus irankiu istorijoje.", "Update project details used by tool transactions.")}</p>
+        <h2 className="page-title">{pickLocaleText(locale, "Redaguoti projektą", "Edit project")}</h2>
+        <p className="page-subtitle">{pickLocaleText(locale, "Atnaujinkite projekto duomenis, naudojamus įrankių istorijoje.", "Update project details used by tool transactions.")}</p>
       </div>
 
       <ProjectForm

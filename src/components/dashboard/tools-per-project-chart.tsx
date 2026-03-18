@@ -18,8 +18,8 @@ export function ToolsPerProjectChart({ data, locale }: ToolsPerProjectChartProps
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold text-slate-900">{pickLocaleText(locale, "Irankiai pagal projekta", "Tools per project")}</CardTitle>
-        <CardDescription>{pickLocaleText(locale, "Dabartinis irankiu pasiskirstymas aktyviuose projektuose.", "Current inventory distribution across active projects.")}</CardDescription>
+        <CardTitle className="text-base font-semibold text-slate-900">{pickLocaleText(locale, "Įrankiai pagal projektą", "Tools per project")}</CardTitle>
+        <CardDescription>{pickLocaleText(locale, "Dabartinis įrankių pasiskirstymas aktyviuose projektuose.", "Current inventory distribution across active projects.")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {data.map((item) => {

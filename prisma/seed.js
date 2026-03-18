@@ -3,7 +3,7 @@ const { hash } = require("bcryptjs");
 
 const prisma = new PrismaClient();
 
-const adminUser = { name: "Marius Admin", email: "admin@statyba.lt", password: "Admin123!" };
+const adminUser = { name: "Tautvydas Kasperavičius", email: "admin@statyba.lt", password: "Admin123!" };
 
 const categories = [{ name: "Power Tools" }, { name: "Hand Tools" }, { name: "Safety Equipment" }];
 

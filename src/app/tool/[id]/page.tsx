@@ -68,14 +68,14 @@ export default async function PublicToolPage({ params }: PublicToolPageProps) {
                   {tool.project ? `${tool.project.code} - ${tool.project.name}` : pickLocaleText(locale, "Nepriskirta", "Unassigned")}
                 </p>
                 <p>
-                  <span className="font-medium text-slate-900">{pickLocaleText(locale, "Bukles pastabos:", "Condition Notes:")}</span> {tool.conditionNotes || pickLocaleText(locale, "Pastabu nera", "No notes")}
+                  <span className="font-medium text-slate-900">{pickLocaleText(locale, "Būklės pastabos:", "Condition Notes:")}</span> {tool.conditionNotes || pickLocaleText(locale, "Pastabų nėra", "No notes")}
                 </p>
               </div>
 
               <div className="mx-auto w-fit rounded-lg border border-slate-200 p-2 shadow-sm">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={qrDataUrl} alt={`QR preview for ${tool.name}`} className="h-[128px] w-[128px]" />
-                <p className="mt-1 text-center text-[11px] text-slate-500">{pickLocaleText(locale, "QR perziura", "QR preview")}</p>
+                <p className="mt-1 text-center text-[11px] text-slate-500">{pickLocaleText(locale, "QR peržiūra", "QR preview")}</p>
               </div>
             </div>
           </CardContent>

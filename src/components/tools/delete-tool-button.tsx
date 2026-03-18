@@ -14,7 +14,7 @@ export function DeleteToolButton({ toolId, locale }: DeleteToolButtonProps) {
   const router = useRouter();
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(pickLocaleText(locale, "Ar tikrai norite istrinti si iranki?", "Delete this tool?"));
+    const confirmed = window.confirm(pickLocaleText(locale, "Ar tikrai norite ištrinti šį įrankį?", "Delete this tool?"));
     if (!confirmed) {
       return;
     }
@@ -24,7 +24,7 @@ export function DeleteToolButton({ toolId, locale }: DeleteToolButtonProps) {
     });
 
     if (!response.ok) {
-      window.alert(pickLocaleText(locale, "Nepavyko istrinti irankio.", "Failed to delete tool."));
+      window.alert(pickLocaleText(locale, "Nepavyko ištrinti įrankio.", "Failed to delete tool."));
       return;
     }
 
@@ -33,7 +33,7 @@ export function DeleteToolButton({ toolId, locale }: DeleteToolButtonProps) {
 
   return (
     <Button type="button" size="sm" variant="outline" onClick={handleDelete}>
-      {pickLocaleText(locale, "Istrinti", "Delete")}
+      {pickLocaleText(locale, "Ištrinti", "Delete")}
     </Button>
   );
 }
