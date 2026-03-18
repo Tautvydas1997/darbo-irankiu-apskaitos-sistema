@@ -96,7 +96,7 @@ export default async function PrintQrPage({ searchParams }: PrintQrPageProps) {
         )}
       </div>
 
-      <style jsx global>{`
+      <style>{`
         @page {
           size: A4 portrait;
           margin: 8mm;
