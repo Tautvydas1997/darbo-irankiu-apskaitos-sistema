@@ -88,7 +88,7 @@ export default async function DashboardPage() {
         </div>
         <Card className="bg-gradient-to-br from-slate-900 to-slate-700 text-white">
           <CardHeader>
-            <CardTitle className="text-base font-semibold">{pickLocaleText(locale, "Operacine suvestine", "Operational summary")}</CardTitle>
+            <CardTitle className="text-base font-semibold text-white">{pickLocaleText(locale, "Suvestinė", "Operational summary")}</CardTitle>
             <CardDescription className="text-slate-200">
               {pickLocaleText(locale, "Esamos sistemos būklės santrauka administravimui.", "Current system health snapshot for management review.")}
             </CardDescription>
