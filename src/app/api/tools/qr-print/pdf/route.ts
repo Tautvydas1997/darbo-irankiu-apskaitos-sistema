@@ -18,6 +18,15 @@ const QR_PADDING = 1.2 * MM_TO_PT;
 const LEFT_PADDING = 2.5 * MM_TO_PT;
 const TOP_PADDING = 2.5 * MM_TO_PT;
 
+function normalizePdfText(value: string): string {
+  // Standard PDF fonts (Helvetica) are WinAnsi; normalize Lithuanian diacritics to avoid encode failures.
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\x20-\x7E]/g, "")
+    .trim();
+}
+
 function parseIds(raw: string | null): string[] {
   if (!raw) {
     return [];
@@ -107,11 +116,12 @@ export async function GET(request: Request) {
       const invY = nameY - 12;
       const maxTextWidth = STICKER_WIDTH - 26 * MM_TO_PT - LEFT_PADDING;
 
-      const toolName = tool.name.length > 45 ? `${tool.name.slice(0, 42)}...` : tool.name;
+      const safeToolName = normalizePdfText(tool.name);
+      const toolName = safeToolName.length > 45 ? `${safeToolName.slice(0, 42)}...` : safeToolName;
       const inventoryNumber =
         tool.inventoryNumber.length > 28
-          ? `${tool.inventoryNumber.slice(0, 25)}...`
-          : tool.inventoryNumber;
+          ? `${normalizePdfText(tool.inventoryNumber).slice(0, 25)}...`
+          : normalizePdfText(tool.inventoryNumber);
 
       page.drawText(toolName, {
         x: textX,
